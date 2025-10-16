@@ -1,10 +1,15 @@
 'use client'
 
 import Link from 'next/link'
+import { useCart } from '@/context/cart-context'
+import { useSession, signOut } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
-import { ShoppingCart, Search, User } from 'lucide-react'
+import { ShoppingCart, Search, User, LogOut } from 'lucide-react'
 
 export function Header() {
+  const { state } = useCart()
+  const { data: session } = useSession()
+
   return (
     <header className="border-b bg-white sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -35,14 +40,31 @@ export function Header() {
             <Button variant="ghost" size="icon">
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-primary text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
-                0
-              </span>
+            
+            {session ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-700">Hi, {session.user?.name}</span>
+                <Button variant="ghost" size="icon" onClick={() => signOut()}>
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <Button variant="ghost" size="icon" asChild>
+                <Link href="/login">
+                  <User className="h-5 w-5" />
+                </Link>
+              </Button>
+            )}
+            
+            <Button variant="ghost" size="icon" className="relative" asChild>
+              <Link href="/cart">
+                <ShoppingCart className="h-5 w-5" />
+                {state.itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-blue-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                    {state.itemCount}
+                  </span>
+                )}
+              </Link>
             </Button>
           </div>
         </div>
