@@ -1,5 +1,19 @@
 import { ProductCard } from './product-card'
 
+interface Product {
+  id: string
+  name: string
+  price: number
+  images: string[]
+  category: string
+  inStock?: boolean
+  stock?: number
+}
+
+interface ProductGridProps {
+  products?: Product[]
+}
+
 // Mock data - replace with actual data from database
 const mockProducts = [
   {
@@ -36,11 +50,19 @@ const mockProducts = [
   },
 ]
 
-export function ProductGrid() {
+export function ProductGrid({ products }: ProductGridProps) {
+  const displayProducts = products || mockProducts
+  
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {mockProducts.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {displayProducts.map((product) => (
+        <ProductCard 
+          key={product.id} 
+          product={{
+            ...product,
+            inStock: product.inStock ?? (product.stock ? product.stock > 0 : true)
+          }} 
+        />
       ))}
     </div>
   )

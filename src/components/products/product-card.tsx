@@ -26,12 +26,11 @@ export function ProductCard({ product }: ProductCardProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform"
           />
-        </div>
-        <div className="p-4">
-          <h3 className="font-semibold text-lg mb-2 group-hover:text-blue-600 transition-colors">
+        </div>        <div className="p-4">
+          <h3 className="font-semibold text-lg mb-2 group-hover:text-blue-600 transition-colors text-gray-900">
             {product.name}
           </h3>
-          <p className="text-gray-600 text-sm mb-2 capitalize">{product.category}</p>
+          <p className="text-gray-700 text-sm mb-2 capitalize">{product.category}</p>
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-gray-900">
               {formatPrice(product.price)}

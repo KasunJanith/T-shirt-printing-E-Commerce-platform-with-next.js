@@ -59,7 +59,21 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-  },  pages: {
+    async redirect({ url, baseUrl }) {
+      // If user is logging in, check their role and redirect accordingly
+      if (url === baseUrl || url === `${baseUrl}/`) {
+        // Get the user's role from the session (you'll need to pass this)
+        // For now, this will be handled in the login page
+        return url
+      }
+      // Allows relative callback URLs
+      if (url.startsWith('/')) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    },
+  },
+  pages: {
     signIn: '/login',
   },
 }

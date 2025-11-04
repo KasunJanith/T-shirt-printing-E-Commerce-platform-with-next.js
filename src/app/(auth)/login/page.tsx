@@ -1,16 +1,29 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { useEffect } from 'react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { data: session, status } = useSession()
+
+  useEffect(() => {
+    // Redirect if already logged in
+    if (status === 'authenticated' && session?.user) {
+      if (session.user.role === 'ADMIN') {
+        router.push('/admin/dashboard')
+      } else {
+        router.push('/dashboard')
+      }
+    }
+  }, [status, session, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,13 +38,21 @@ export default function LoginPage() {
 
       if (result?.error) {
         alert('Invalid credentials')
+        setLoading(false)
       } else {
-        router.push('/')
+        // Fetch session to check user role
+        const response = await fetch('/api/auth/session')
+        const sessionData = await response.json()
+        
+        if (sessionData?.user?.role === 'ADMIN') {
+          router.push('/admin/dashboard')
+        } else {
+          router.push('/dashboard')
+        }
         router.refresh()
       }
     } catch (error) {
       alert('An error occurred')
-    } finally {
       setLoading(false)
     }
   }

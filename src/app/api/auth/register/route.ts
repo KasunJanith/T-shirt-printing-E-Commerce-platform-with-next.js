@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
+import { validatePassword } from '@/lib/password-validation'
 
 export async function POST(request: Request) {
   try {
@@ -9,6 +10,15 @@ export async function POST(request: Request) {
     if (!name || !email || !password) {
       return NextResponse.json(
         { message: 'All fields are required' },
+        { status: 400 }
+      )
+    }
+
+    // Validate password strength
+    const passwordValidation = validatePassword(password)
+    if (!passwordValidation.isValid) {
+      return NextResponse.json(
+        { message: passwordValidation.message },
         { status: 400 }
       )
     }

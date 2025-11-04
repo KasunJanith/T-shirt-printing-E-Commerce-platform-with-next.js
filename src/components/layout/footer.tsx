@@ -43,10 +43,8 @@ export function Footer() {
               <li><Link href="/refund-policy">Refund Policy</Link></li>
             </ul>
           </div>
-        </div>
-
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 TShirtStore. All rights reserved.</p>
+        </div>        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 Shirt Canary. All rights reserved.</p>
         </div>
       </div>
     </footer>

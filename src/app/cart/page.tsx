@@ -2,7 +2,8 @@
 
 import { useCart } from '@/context/cart-context'
 import { Button } from '@/components/ui/button'
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
+import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -20,96 +21,127 @@ export default function CartPage() {
 
   if (state.items.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <ShoppingBag className="mx-auto h-24 w-24 text-gray-400 mb-4" />
-        <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
-        <p className="text-gray-600 mb-8">Start shopping to add items to your cart</p>
-        <Button asChild>
-          <Link href="/shop">Continue Shopping</Link>
-        </Button>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="container mx-auto px-4 py-16 text-center">          <div className="max-w-md mx-auto">
+            <ShoppingBag className="mx-auto h-24 w-24 text-gray-400 mb-6" />
+            <h2 className="text-3xl font-bold mb-4 text-gray-900">Your cart is empty</h2>
+            <p className="text-gray-700 mb-8">Looks like you haven't added any items to your cart yet.</p>
+            <Button asChild size="lg" className="w-full">
+              <Link href="/shop">
+                Start Shopping
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
-          {state.items.map((item) => (
-            <div key={item.id} className="flex items-center space-x-4 border-b py-4">
-              <div className="relative w-20 h-20 bg-gray-100 rounded">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  className="object-cover rounded"
-                />
-              </div>
-              
-              <div className="flex-1">
-                <h3 className="font-semibold">{item.name}</h3>
-                <p className="text-gray-600 text-sm">
-                  Size: {item.size} | Color: {item.color}
-                </p>
-                <p className="font-semibold">${item.price}</p>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                >
-                  <Minus className="h-4 w-4" />
-                </Button>
-                <span className="w-8 text-center">{item.quantity}</span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-              
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => removeItem(item.id)}
-              >
-                <Trash2 className="h-4 w-4 text-red-500" />
-              </Button>
-            </div>
-          ))}
-        </div>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold mb-8">Shopping Cart</h1>
         
-        <div className="bg-gray-50 p-6 rounded-lg h-fit">
-          <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-          
-          <div className="space-y-2 mb-4">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>${state.total.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Shipping</span>
-              <span>$5.00</span>
-            </div>
-            <div className="flex justify-between text-lg font-bold border-t pt-2">
-              <span>Total</span>
-              <span>${(state.total + 5).toFixed(2)}</span>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-4">
+            {state.items.map((item) => (
+              <Card key={item.id}>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-6">
+                    <div className="relative w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
+                      <div className="flex-1">
+                      <h3 className="font-semibold text-lg text-gray-900">{item.name}</h3>
+                      <p className="text-gray-700 text-sm mt-1">
+                        Size: {item.size} | Color: {item.color}
+                      </p>
+                      <p className="font-bold text-lg mt-2 text-gray-900">${item.price.toFixed(2)}</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          disabled={item.quantity <= 1}
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="w-12 text-center font-medium">{item.quantity}</span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeItem(item.id)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-5 w-5" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
           
-          <Button className="w-full mb-4" asChild>
-            <Link href="/checkout">Proceed to Checkout</Link>
-          </Button>
-          
-          <Button variant="outline" className="w-full" asChild>
-            <Link href="/shop">Continue Shopping</Link>
-          </Button>
+          <div className="lg:col-span-1">
+            <Card className="sticky top-8">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+                  <div className="space-y-3 mb-6">
+                  <div className="flex justify-between text-gray-700">
+                    <span>Subtotal ({state.items.reduce((acc, item) => acc + item.quantity, 0)} items)</span>
+                    <span className="font-medium">${state.total.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-700">
+                    <span>Shipping</span>
+                    <span className="font-medium">{state.total > 50 ? 'FREE' : '$5.00'}</span>
+                  </div>
+                  <div className="border-t pt-3">
+                    <div className="flex justify-between text-xl font-bold">
+                      <span>Total</span>
+                      <span>${(state.total + (state.total > 50 ? 0 : 5)).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <Button className="w-full mb-3" size="lg" asChild>
+                  <Link href="/checkout">
+                    Proceed to Checkout
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="/shop">Continue Shopping</Link>
+                </Button>
+                
+                {state.total < 50 && (
+                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      Add <span className="font-bold">${(50 - state.total).toFixed(2)}</span> more to get <span className="font-bold">FREE shipping</span>!
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
