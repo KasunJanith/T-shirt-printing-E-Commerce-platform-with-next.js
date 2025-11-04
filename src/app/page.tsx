@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ProductGrid } from '@/components/products/product-grid'
 
@@ -32,17 +33,17 @@ export default function Home() {
             <CategoryCard
               title="Men's Collection"
               href="/shop/men"
-              image="/images/mens-category.jpg"
+              image="/images/categories/mens-category.jpg"
             />
             <CategoryCard
               title="Women's Collection"
               href="/shop/women"
-              image="/images/womens-category.jpg"
+              image="/images/categories/womens-category.jpg"
             />
             <CategoryCard
               title="Kids' Collection"
               href="/shop/kids"
-              image="/images/kids-category.jpg"
+              image="/images/categories/kids-category.jpg"
             />
           </div>
         </div>
@@ -63,8 +64,14 @@ function CategoryCard({ title, href, image }: { title: string; href: string; ima
   return (
     <Link href={href} className="group">
       <div className="relative overflow-hidden rounded-lg bg-gray-200 aspect-[4/5]">
+        <Image 
+          src={image} 
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <div className="absolute bottom-4 left-4 text-white">
+        <div className="absolute bottom-4 left-4 text-white z-10">
           <h3 className="text-2xl font-semibold">{title}</h3>
           <p className="text-blue-200 group-hover:text-white transition-colors">
             Shop Now →

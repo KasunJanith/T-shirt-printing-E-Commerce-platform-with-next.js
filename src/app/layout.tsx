@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TShirt Store - Premium T-Shirts",
+  title: "Shirt Canary - Premium T-Shirts",
   description: "Shop the best quality t-shirts for men, women, and kids",
 };
 

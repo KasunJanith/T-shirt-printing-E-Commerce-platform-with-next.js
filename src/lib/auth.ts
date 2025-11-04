@@ -5,7 +5,6 @@ import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'jwt',
   },
@@ -46,24 +45,21 @@ export const authOptions: NextAuthOptions = {
         }
       }
     })
-  ],
-  callbacks: {
+  ],  callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.role = (user as any).role
       }
       return token
     },
     async session({ session, token }) {
-      if (token) {
+      if (token && session.user) {
         session.user.id = token.sub!
-        session.user.role = token.role as string
+        session.user.role = token.role
       }
       return session
     },
-  },
-  pages: {
+  },  pages: {
     signIn: '/login',
-    signUp: '/register',
   },
 }
