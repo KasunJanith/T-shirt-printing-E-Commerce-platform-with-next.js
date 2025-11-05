@@ -162,8 +162,7 @@ export default function AdminUsers() {
                       <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
                         No users found
                       </td>
-                    </tr>
-                  ) : (
+                    </tr>                  ) : (
                     filteredUsers.map((user) => (
                       <tr key={user.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -177,7 +176,8 @@ export default function AdminUsers() {
                               </div>
                             </div>
                           </div>
-                        </td>                        <td className="px-6 py-4 whitespace-nowrap">
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">{user.email}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
