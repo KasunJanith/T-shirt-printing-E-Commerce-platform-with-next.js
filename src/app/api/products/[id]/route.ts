@@ -10,8 +10,8 @@ export async function GET(
 ) {
   try {
     const product = await prisma.product.findUnique({
-      where: { id: params.id },      include: {
-        category: true,
+      where: { id: params.id },
+      include: {
         variants: true,
       },
     })
@@ -40,10 +40,8 @@ export async function PUT(
 
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    const body = await request.json()
-    const { name, description, price, images, categoryId, inStock, featured } = body
+    }    const body = await request.json()
+    const { name, description, price, images, printSize, inStock, featured } = body
 
     const product = await prisma.product.update({
       where: { id: params.id },
@@ -52,12 +50,11 @@ export async function PUT(
         description,
         price,
         images,
-        categoryId,
+        printSize,
         inStock,
         featured,
       },
       include: {
-        category: true,
         variants: true,
       },
     })
@@ -82,16 +79,14 @@ export async function PATCH(
 
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    const body = await request.json()
+    }    const body = await request.json()
     const updateData: any = {}
     
     if (body.name !== undefined) updateData.name = body.name
     if (body.description !== undefined) updateData.description = body.description
     if (body.price !== undefined) updateData.price = body.price
     if (body.images !== undefined) updateData.images = body.images
-    if (body.categoryId !== undefined) updateData.categoryId = body.categoryId
+    if (body.printSize !== undefined) updateData.printSize = body.printSize
     if (body.inStock !== undefined) updateData.inStock = body.inStock
     if (body.featured !== undefined) updateData.featured = body.featured
 
@@ -99,7 +94,6 @@ export async function PATCH(
       where: { id: params.id },
       data: updateData,
       include: {
-        category: true,
         variants: true,
       },
     })

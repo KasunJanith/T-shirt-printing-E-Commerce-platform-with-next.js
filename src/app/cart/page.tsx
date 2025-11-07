@@ -25,9 +25,8 @@ export default function CartPage() {
         <div className="container mx-auto px-4 py-16 text-center">          <div className="max-w-md mx-auto">
             <ShoppingBag className="mx-auto h-24 w-24 text-gray-400 mb-6" />
             <h2 className="text-3xl font-bold mb-4 text-gray-900">Your cart is empty</h2>
-            <p className="text-gray-700 mb-8">Looks like you haven't added any items to your cart yet.</p>
-            <Button asChild size="lg" className="w-full">
-              <Link href="/shop">
+            <p className="text-gray-700 mb-8">Looks like you haven't added any items to your cart yet.</p>            <Button asChild size="lg" className="w-full">
+              <Link href="/shop" className="flex items-center justify-center">
                 Start Shopping
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -58,11 +57,10 @@ export default function CartPage() {
                       />
                     </div>
                       <div className="flex-1">
-                      <h3 className="font-semibold text-lg text-gray-900">{item.name}</h3>
-                      <p className="text-gray-700 text-sm mt-1">
+                      <h3 className="font-semibold text-lg text-gray-900">{item.name}</h3>                      <p className="text-gray-700 text-sm mt-1">
                         Size: {item.size} | Color: {item.color}
                       </p>
-                      <p className="font-bold text-lg mt-2 text-gray-900">${item.price.toFixed(2)}</p>
+                      <p className="font-bold text-lg mt-2 text-gray-900">${Number(item.price).toFixed(2)}</p>
                     </div>
                     
                     <div className="flex items-center gap-4">
@@ -120,9 +118,8 @@ export default function CartPage() {
                     </div>
                   </div>
                 </div>
-                
-                <Button className="w-full mb-3" size="lg" asChild>
-                  <Link href="/checkout">
+                  <Button className="w-full mb-3" size="lg" asChild>
+                  <Link href="/checkout" className="flex items-center justify-center">
                     Proceed to Checkout
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>

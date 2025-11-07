@@ -55,10 +55,9 @@ export default function MenShopPage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl">
               Discover premium quality t-shirts designed for the modern man. 
               From casual to sporty, find your perfect style.
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </p>            <div className="flex flex-wrap gap-4">
               <Button size="lg" variant="secondary" asChild>
-                <Link href="/shop">
+                <Link href="/shop" className="flex items-center">
                   View All Products
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

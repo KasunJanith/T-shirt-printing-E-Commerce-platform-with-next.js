@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
 export interface CartItem {
   id: string
@@ -84,27 +85,63 @@ function calculateTotals(items: CartItem[]): CartState {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession()
   const [state, dispatch] = useReducer(cartReducer, {
     items: [],
     total: 0,
     itemCount: 0
   })
 
+  // Load cart from localStorage or backend on mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart')
-    if (savedCart) {
-      try {
-        const cartData = JSON.parse(savedCart)
-        dispatch({ type: 'LOAD_CART', payload: cartData })
-      } catch (error) {
-        console.error('Error loading cart from localStorage:', error)
+    const loadCart = async () => {
+      if (session?.user) {
+        // If logged in, try to fetch cart from backend
+        try {
+          const response = await fetch('/api/cart')
+          if (response.ok) {
+            const data = await response.json()
+            if (data.items && data.items.length > 0) {
+              dispatch({ type: 'LOAD_CART', payload: data.items })
+              return
+            }
+          }
+        } catch (error) {
+          console.error('Error loading cart from backend:', error)
+        }
+      }
+      
+      // Fall back to localStorage
+      const savedCart = localStorage.getItem('cart')
+      if (savedCart) {
+        try {
+          const cartData = JSON.parse(savedCart)
+          dispatch({ type: 'LOAD_CART', payload: cartData })
+        } catch (error) {
+          console.error('Error loading cart from localStorage:', error)
+        }
       }
     }
-  }, [])
 
+    loadCart()
+  }, [session])
+
+  // Save cart to localStorage and backend when it changes
   useEffect(() => {
+    // Always save to localStorage
     localStorage.setItem('cart', JSON.stringify(state.items))
-  }, [state.items])
+
+    // If logged in, also save to backend
+    if (session?.user && state.items.length > 0) {
+      fetch('/api/cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: state.items })
+      }).catch(error => {
+        console.error('Error saving cart to backend:', error)
+      })
+    }
+  }, [state.items, session])
 
   return (
     <CartContext.Provider value={{ state, dispatch }}>

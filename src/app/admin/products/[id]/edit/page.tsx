@@ -125,10 +125,9 @@ export default function EditProduct() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        {/* Header */}
-        <div className="mb-8">
+        {/* Header */}        <div className="mb-8">
           <Button variant="ghost" asChild className="mb-4">
-            <Link href="/admin/products">
+            <Link href="/admin/products" className="flex items-center">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Products
             </Link>
@@ -157,9 +156,7 @@ export default function EditProduct() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full"
                 />
-              </div>
-
-              {/* Description */}
+              </div>              {/* Description */}
               <div>
                 <label htmlFor="description" className="block text-sm font-medium text-gray-900 mb-2">
                   Description
@@ -169,7 +166,7 @@ export default function EditProduct() {
                   placeholder="Enter product description..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full min-h-[120px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                  className="w-full min-h-[120px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 />
               </div>
 
@@ -193,17 +190,16 @@ export default function EditProduct() {
                 <div>
                   <label htmlFor="category" className="block text-sm font-medium text-gray-900 mb-2">
                     Category *
-                  </label>
-                  <select
+                  </label>                  <select
                     id="category"
                     required
                     value={formData.categoryId}
                     onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                   >
-                    <option value="">Select a category</option>
+                    <option value="" className="text-gray-500">Select a category</option>
                     {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
+                      <option key={category.id} value={category.id} className="text-gray-900">
                         {category.name}
                       </option>
                     ))}
@@ -222,9 +218,7 @@ export default function EditProduct() {
                   />
                   <span className="text-sm font-medium text-gray-900">In Stock</span>
                 </label>
-              </div>
-
-              {/* Images */}
+              </div>              {/* Images */}
               <div>
                 <label htmlFor="images" className="block text-sm font-medium text-gray-900 mb-2">
                   Image URLs (comma-separated) *
@@ -235,7 +229,7 @@ export default function EditProduct() {
                   placeholder="/images/products/tshirt-1.jpg, /images/products/tshirt-2.jpg"
                   value={formData.images}
                   onChange={(e) => setFormData({ ...formData, images: e.target.value })}
-                  className="w-full min-h-[80px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                  className="w-full min-h-[80px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 />
                 <p className="mt-1 text-sm text-gray-700">
                   Enter image paths or URLs separated by commas

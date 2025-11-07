@@ -42,33 +42,27 @@ export default function TermsPage() {
               <li>• Maintain the security of your account</li>
               <li>• Accept responsibility for all activities under your account</li>
             </ul>
-          </Card>
-
-          {/* Use of Services */}
+          </Card>          {/* Use of Services */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">2. Use of Services</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">2. Use of Services</h2>
             
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-lg mb-3">Eligibility</h3>
+                <h3 className="font-semibold text-lg mb-3 text-gray-900">Eligibility</h3>
                 <p className="text-gray-700">
                   You must be at least 18 years old to make purchases. By using our services, 
                   you represent that you meet this requirement.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Account Registration</h3>
+              </div>              <div>
+                <h3 className="font-semibold text-lg mb-3 text-gray-900">Account Registration</h3>
                 <ul className="space-y-2 text-gray-700 ml-6">
                   <li>• You are responsible for maintaining account confidentiality</li>
                   <li>• You must provide accurate, current information</li>
                   <li>• You may not share your account credentials</li>
                   <li>• We reserve the right to suspend or terminate accounts for violations</li>
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Prohibited Activities</h3>
+              </div>              <div>
+                <h3 className="font-semibold text-lg mb-3 text-gray-900">Prohibited Activities</h3>
                 <p className="text-gray-700 mb-2">You may not:</p>
                 <ul className="space-y-2 text-gray-700 ml-6">
                   <li>• Use our services for illegal purposes</li>
@@ -80,41 +74,33 @@ export default function TermsPage() {
                 </ul>
               </div>
             </div>
-          </Card>
-
-          {/* Products and Orders */}
+          </Card>          {/* Products and Orders */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">3. Products and Orders</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">3. Products and Orders</h2>
             
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold mb-2">Product Descriptions</h3>
+                <h3 className="font-semibold mb-2 text-gray-900">Product Descriptions</h3>
                 <p className="text-gray-700">
                   We strive for accuracy in product descriptions and images. However, we do not 
                   warrant that descriptions are error-free. Colors may vary due to monitor settings.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Pricing</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Pricing</h3>
                 <ul className="space-y-2 text-gray-700 ml-6">
                   <li>• Prices are subject to change without notice</li>
                   <li>• We reserve the right to correct pricing errors</li>
                   <li>• All prices are in USD unless otherwise stated</li>
                   <li>• Applicable taxes and shipping costs will be added at checkout</li>
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Order Acceptance</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Order Acceptance</h3>
                 <p className="text-gray-700">
                   We reserve the right to refuse or cancel any order for any reason, including 
                   suspected fraud, pricing errors, or product unavailability.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Payment</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Payment</h3>
                 <ul className="space-y-2 text-gray-700 ml-6">
                   <li>• Payment must be received before order fulfillment</li>
                   <li>• We accept major credit cards and other payment methods</li>
@@ -123,11 +109,9 @@ export default function TermsPage() {
                 </ul>
               </div>
             </div>
-          </Card>
-
-          {/* Shipping and Delivery */}
+          </Card>          {/* Shipping and Delivery */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">4. Shipping and Delivery</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">4. Shipping and Delivery</h2>
             
             <ul className="space-y-2 text-gray-700 ml-6">
               <li>• Shipping times are estimates and not guaranteed</li>
@@ -135,11 +119,9 @@ export default function TermsPage() {
               <li>• You are responsible for providing accurate shipping information</li>
               <li>• Additional customs fees may apply for international orders</li>
             </ul>
-          </Card>
-
-          {/* Returns and Refunds */}
+          </Card>          {/* Returns and Refunds */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">5. Returns and Refunds</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">5. Returns and Refunds</h2>
             
             <p className="text-gray-700 mb-4">
               Please refer to our Return Policy for detailed information. Key points:
@@ -191,11 +173,9 @@ export default function TermsPage() {
               <li>• We do not guarantee uninterrupted or error-free service</li>
               <li>• We are not responsible for third-party content or services</li>
             </ul>
-          </Card>
-
-          {/* Indemnification */}
+          </Card>          {/* Indemnification */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">8. Indemnification</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">8. Indemnification</h2>
             
             <p className="text-gray-700">
               You agree to indemnify and hold harmless Shirt Canary, its officers, directors, 

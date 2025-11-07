@@ -55,10 +55,9 @@ export default function KidsShopPage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl">
               Fun, colorful, and comfortable t-shirts that kids love to wear. 
               Soft fabrics perfect for active play and everyday adventures.
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </p>            <div className="flex flex-wrap gap-4">
               <Button size="lg" variant="secondary" asChild>
-                <Link href="/shop">
+                <Link href="/shop" className="flex items-center">
                   View All Products
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

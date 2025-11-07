@@ -36,15 +36,13 @@ export default function ShippingPage() {
               <p className="text-2xl font-bold text-gray-900">$14.99</p>
               <p className="text-sm text-gray-700">Get it faster</p>
             </Card>
-          </div>
-
-          {/* Shipping Details */}
+          </div>          {/* Shipping Details */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">Shipping Details</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Shipping Details</h2>
             
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-lg mb-3 flex items-center">
+                <h3 className="font-semibold text-lg mb-3 flex items-center text-gray-900">
                   <MapPin className="h-5 w-5 mr-2 text-blue-600" />
                   Domestic Shipping (United States)
                 </h3>
@@ -55,10 +53,8 @@ export default function ShippingPage() {
                   <li>• We ship to all 50 states, including Alaska and Hawaii</li>
                   <li>• P.O. boxes accepted</li>
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg mb-3 flex items-center">
+              </div>              <div>
+                <h3 className="font-semibold text-lg mb-3 flex items-center text-gray-900">
                   <Package className="h-5 w-5 mr-2 text-blue-600" />
                   International Shipping
                 </h3>
@@ -69,10 +65,8 @@ export default function ShippingPage() {
                   <li>• Customs fees may apply (paid by recipient)</li>
                   <li>• Limited tracking available for some countries</li>
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg mb-3 flex items-center">
+              </div>              <div>
+                <h3 className="font-semibold text-lg mb-3 flex items-center text-gray-900">
                   <Clock className="h-5 w-5 mr-2 text-blue-600" />
                   Processing Time
                 </h3>
@@ -84,11 +78,9 @@ export default function ShippingPage() {
                 </ul>
               </div>
             </div>
-          </Card>
-
-          {/* Order Tracking */}
+          </Card>          {/* Order Tracking */}
           <Card className="p-8 mb-8 bg-blue-50 border-blue-200">
-            <h2 className="text-2xl font-bold mb-4">Track Your Order</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-900">Track Your Order</h2>
             <p className="text-gray-700 mb-4">
               Once your order ships, you'll receive an email with your tracking number. 
               You can also track your order status by logging into your account and 
@@ -98,39 +90,31 @@ export default function ShippingPage() {
               <strong>Having issues?</strong> Contact our customer service team at 
               support@shirtcanary.com
             </p>
-          </Card>
-
-          {/* FAQs */}
+          </Card>          {/* FAQs */}
           <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6">Shipping FAQs</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Shipping FAQs</h2>
             
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold mb-2">Can I change my shipping address after placing an order?</h3>
+                <h3 className="font-semibold mb-2 text-gray-900">Can I change my shipping address after placing an order?</h3>
                 <p className="text-gray-700">
                   Please contact us immediately if you need to change your shipping address. 
                   We can update it if the order hasn't been shipped yet.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Do you offer same-day shipping?</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Do you offer same-day shipping?</h3>
                 <p className="text-gray-700">
                   We don't currently offer same-day shipping, but orders placed before 2 PM EST 
                   are typically processed and shipped the same business day.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">What if my package is lost or damaged?</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">What if my package is lost or damaged?</h3>
                 <p className="text-gray-700">
                   If your package arrives damaged or doesn't arrive at all, please contact us 
                   within 7 days. We'll work with you to resolve the issue quickly.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Do you ship to military addresses (APO/FPO)?</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Do you ship to military addresses (APO/FPO)?</h3>
                 <p className="text-gray-700">
                   Yes! We're proud to ship to APO/FPO addresses. These orders are processed 
                   as domestic shipments.

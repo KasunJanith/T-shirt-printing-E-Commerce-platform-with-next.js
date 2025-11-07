@@ -98,12 +98,11 @@ export default function UserDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <Card>
-              <CardContent className="p-6">
+            <Card>              <CardContent className="p-6">
                 <div className="flex flex-col space-y-2">
                   <Button
                     variant={activeTab === 'orders' ? 'default' : 'ghost'}
-                    className="justify-start"
+                    className={`justify-start ${activeTab === 'orders' ? '' : 'text-gray-900'}`}
                     onClick={() => setActiveTab('orders')}
                   >
                     <Package className="mr-2 h-4 w-4" />
@@ -111,7 +110,7 @@ export default function UserDashboard() {
                   </Button>
                   <Button
                     variant={activeTab === 'profile' ? 'default' : 'ghost'}
-                    className="justify-start"
+                    className={`justify-start ${activeTab === 'profile' ? '' : 'text-gray-900'}`}
                     onClick={() => setActiveTab('profile')}
                   >
                     <User className="mr-2 h-4 w-4" />
@@ -133,13 +132,12 @@ export default function UserDashboard() {
           {/* Main Content */}
           <div className="lg:col-span-3">
             {activeTab === 'orders' && (
-              <div className="space-y-6">
-                <Card>
+              <div className="space-y-6">                <Card>
                   <CardHeader>
-                    <CardTitle>My Orders</CardTitle>
-                    <CardDescription>View and track your orders</CardDescription>
+                    <CardTitle className="text-gray-900">My Orders</CardTitle>
+                    <CardDescription className="text-gray-700">View and track your orders</CardDescription>
                   </CardHeader>
-                  <CardContent>                    {orders.length === 0 ? (
+                  <CardContent>{orders.length === 0 ? (
                       <div className="text-center py-12">
                         <Package className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                         <h3 className="text-lg font-medium text-gray-900 mb-2">No orders yet</h3>
@@ -172,11 +170,10 @@ export default function UserDashboard() {
                               </div>
                               <div className="border-t pt-4">
                                 {order.items.map((item) => (
-                                  <div key={item.id} className="flex items-center gap-4 py-2">
-                                    <div className="flex-1">
+                                  <div key={item.id} className="flex items-center gap-4 py-2">                                    <div className="flex-1">
                                       <p className="font-medium text-gray-900">{item.product.name}</p>
                                       <p className="text-sm text-gray-700">
-                                        Quantity: {item.quantity} × ${item.price.toFixed(2)}
+                                        Quantity: {item.quantity} × ${Number(item.price).toFixed(2)}
                                       </p>
                                     </div>
                                   </div>
@@ -190,15 +187,13 @@ export default function UserDashboard() {
                   </CardContent>
                 </Card>
               </div>
-            )}
-
-            {activeTab === 'profile' && (
+            )}            {activeTab === 'profile' && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Profile Settings</CardTitle>
-                  <CardDescription>Manage your account information</CardDescription>
+                  <CardTitle className="text-gray-900">Profile Settings</CardTitle>
+                  <CardDescription className="text-gray-700">Manage your account information</CardDescription>
                 </CardHeader>
-                <CardContent>                  <form className="space-y-4">
+                <CardContent><form className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-900 mb-2">
                         Name

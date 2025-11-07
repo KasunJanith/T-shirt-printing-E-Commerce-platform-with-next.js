@@ -89,17 +89,16 @@ export default function AdminDashboard() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-gray-900">Admin Dashboard</h1>
-            <p className="text-gray-700 mt-2">Manage your e-commerce store</p>
-          </div>
+            <p className="text-gray-700 mt-2">Manage your e-commerce store</p>          </div>
           <div className="flex gap-2">
             <Button asChild variant="outline">
-              <Link href="/admin/products">
+              <Link href="/admin/products" className="flex items-center">
                 <Package className="mr-2 h-4 w-4" />
                 Products
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/admin/users">
+              <Link href="/admin/users" className="flex items-center">
                 <Users className="mr-2 h-4 w-4" />
                 Users
               </Link>
@@ -161,28 +160,27 @@ export default function AdminDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-gray-900">Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
+              </CardHeader>              <CardContent className="space-y-2">
                 <Button asChild className="w-full justify-start" variant="outline">
-                  <Link href="/admin/products">
+                  <Link href="/admin/products" className="flex items-center">
                     <Package className="mr-2 h-4 w-4" />
                     Manage Products
                   </Link>
                 </Button>
                 <Button asChild className="w-full justify-start" variant="outline">
-                  <Link href="/admin/orders">
+                  <Link href="/admin/orders" className="flex items-center">
                     <ShoppingCart className="mr-2 h-4 w-4" />
                     View Orders
                   </Link>
                 </Button>
                 <Button asChild className="w-full justify-start" variant="outline">
-                  <Link href="/admin/users">
+                  <Link href="/admin/users" className="flex items-center">
                     <Users className="mr-2 h-4 w-4" />
                     Manage Users
                   </Link>
                 </Button>
-                <Button asChild className="w-full justify-start">
-                  <Link href="/admin/products/new">
+                <Button asChild className="w-full justify-start bg-blue-600 hover:bg-blue-700 text-white">
+                  <Link href="/admin/products/new" className="flex items-center">
                     <Plus className="mr-2 h-4 w-4" />
                     Add New Product
                   </Link>

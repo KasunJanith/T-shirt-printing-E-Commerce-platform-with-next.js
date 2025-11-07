@@ -22,6 +22,7 @@ model User {
   sessions Session[]
   orders   Order[]
   addresses Address[]
+  cart     Cart?
   
   @@map("users")
 }
@@ -44,20 +45,20 @@ model Address {
 }
 
 model Product {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   description String
   price       Decimal
   images      String[]
-  categoryId  String
-  inStock     Boolean  @default(true)
-  featured    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  printSize   PrintSize  @default(MEDIUM)
+  inStock     Boolean    @default(true)
+  featured    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   
-  category    Category @relation(fields: [categoryId], references: [id])
   variants    ProductVariant[]
   orders      OrderItem[]
+  cartItems   CartItem[]
   
   @@map("products")
 }
@@ -73,18 +74,6 @@ model ProductVariant {
   
   @@unique([productId, size, color])
   @@map("product_variants")
-}
-
-model Category {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  slug        String   @unique
-  description String?
-  image       String?
-  
-  products    Product[]
-  
-  @@map("categories")
 }
 
 model Order {
@@ -126,6 +115,33 @@ model OrderItem {
   @@map("order_items")
 }
 
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  
+  @@map("carts")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  productId String
+  quantity  Int
+  size      String
+  color     String
+  createdAt DateTime @default(now())
+  
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@map("cart_items")
+}
+
 enum Role {
   USER
   ADMIN
@@ -138,6 +154,12 @@ enum Size {
   L
   XL
   XXL
+}
+
+enum PrintSize {
+  SMALL
+  MEDIUM
+  FULL
 }
 
 enum OrderStatus {

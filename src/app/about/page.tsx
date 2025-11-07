@@ -22,9 +22,8 @@ export default function AboutPage() {
 
       {/* Our Story */}
       <div className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-20">            <div>
-              <h2 className="text-4xl font-bold mb-6">Our Story</h2>
+        <div className="max-w-6xl mx-auto">          <div className="grid md:grid-cols-2 gap-12 items-center mb-20">            <div>
+              <h2 className="text-4xl font-bold mb-6 text-gray-900">Our Story</h2>
               <div className="space-y-4 text-gray-800 text-lg">
                 <p>
                   Founded in 2024, Shirt Canary began with a simple mission: to create 
@@ -50,12 +49,10 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Values */}
+          </div>          {/* Values */}
           <div className="mb-20">
-            <h2 className="text-4xl font-bold text-center mb-12">Our Values</h2>
-            <div className="grid md:grid-cols-3 gap-8">              <Card className="p-8 text-center hover:shadow-lg transition-shadow">
+            <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Our Values</h2>
+            <div className="grid md:grid-cols-3 gap-8"><Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="h-8 w-8 text-blue-600" />
                 </div>
@@ -110,11 +107,9 @@ export default function AboutPage() {
                 <div className="text-white/80">Quality Guaranteed</div>
               </div>
             </div>
-          </div>
-
-          {/* Why Choose Us */}
+          </div>          {/* Why Choose Us */}
           <div className="mb-20">
-            <h2 className="text-4xl font-bold text-center mb-12">Why Choose Shirt Canary?</h2>
+            <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Why Choose Shirt Canary?</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <Card className="p-6">
                 <div className="flex items-start space-x-4">
@@ -180,9 +175,8 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold mb-4 text-gray-900">Ready to Experience the Difference?</h2>
             <p className="text-gray-700 mb-8 text-lg">
               Join thousands of satisfied customers who've made the switch to Shirt Canary.
-            </p>
-            <Button size="lg" asChild>
-              <Link href="/shop">
+            </p>            <Button size="lg" asChild className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Link href="/shop" className="flex items-center justify-center">
                 Shop Now
               </Link>
             </Button>

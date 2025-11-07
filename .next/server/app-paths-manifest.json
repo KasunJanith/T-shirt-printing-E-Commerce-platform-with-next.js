@@ -1,13 +1,15 @@
 {
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/users/route": "app/api/users/route.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/cart/route": "app/api/cart/route.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/users/route": "app/api/users/route.js",
+  "/api/categories/route": "app/api/categories/route.js",
   "/api/products/route": "app/api/products/route.js",
+  "/api/products/[id]/route": "app/api/products/[id]/route.js",
   "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/admin/products/page": "app/admin/products/page.js",
   "/admin/users/page": "app/admin/users/page.js",
-  "/admin/products/new/page": "app/admin/products/new/page.js"
+  "/admin/products/new/page": "app/admin/products/new/page.js",
+  "/admin/products/[id]/edit/page": "app/admin/products/[id]/edit/page.js"
 }

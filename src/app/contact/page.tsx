@@ -97,12 +97,10 @@ export default function ContactPage() {
                 New York, NY 10001
               </p>
             </Card>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
+          </div>          <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
-              <h2 className="text-3xl font-bold mb-6">Send us a Message</h2>
+              <h2 className="text-3xl font-bold mb-6 text-gray-900">Send us a Message</h2>
               
               {isSubmitted ? (
                 <Card className="p-8 text-center bg-green-50 border-green-200">
@@ -166,8 +164,7 @@ export default function ContactPage() {
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                         Message *
-                      </label>
-                      <textarea
+                      </label>                      <textarea
                         id="message"
                         name="message"
                         required
@@ -176,7 +173,7 @@ export default function ContactPage() {
                         rows={6}
                         placeholder="Tell us more about your inquiry..."
                         disabled={isSubmitting}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       />
                     </div>
 
@@ -206,7 +203,7 @@ export default function ContactPage() {
               <h2 className="text-3xl font-bold mb-6 text-gray-900">Frequently Asked Questions</h2>
               
               <div className="space-y-4">                <Card className="p-6">
-                  <h3 className="font-semibold text-lg mb-2 flex items-center">
+                  <h3 className="font-semibold text-lg mb-2 flex items-center text-gray-900">
                     <MessageSquare className="h-5 w-5 mr-2 text-blue-600" />
                     What are your shipping times?
                   </h3>
@@ -214,10 +211,8 @@ export default function ContactPage() {
                     We typically ship orders within 1-2 business days. Delivery usually 
                     takes 3-5 business days within the US.
                   </p>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold text-lg mb-2 flex items-center">
+                </Card>                <Card className="p-6">
+                  <h3 className="font-semibold text-lg mb-2 flex items-center text-gray-900">
                     <MessageSquare className="h-5 w-5 mr-2 text-blue-600" />
                     What is your return policy?
                   </h3>
@@ -225,10 +220,8 @@ export default function ContactPage() {
                     We offer a 30-day return policy for all unworn items with original 
                     tags. Free returns for defective products.
                   </p>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold text-lg mb-2 flex items-center">
+                </Card>                <Card className="p-6">
+                  <h3 className="font-semibold text-lg mb-2 flex items-center text-gray-900">
                     <MessageSquare className="h-5 w-5 mr-2 text-blue-600" />
                     Do you offer international shipping?
                   </h3>
@@ -236,10 +229,8 @@ export default function ContactPage() {
                     Yes! We ship to over 50 countries worldwide. International shipping 
                     times vary by location (7-14 business days).
                   </p>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold text-lg mb-2 flex items-center">
+                </Card>                <Card className="p-6">
+                  <h3 className="font-semibold text-lg mb-2 flex items-center text-gray-900">
                     <MessageSquare className="h-5 w-5 mr-2 text-blue-600" />
                     How do I track my order?
                   </h3>
@@ -248,13 +239,11 @@ export default function ContactPage() {
                     You can also check your order status in your dashboard.
                   </p>
                 </Card>
-              </div>
-
-              <Card className="p-6 mt-6 bg-blue-50 border-blue-200">
+              </div>              <Card className="p-6 mt-6 bg-blue-50 border-blue-200">
                 <div className="flex items-start space-x-4">
                   <Clock className="h-6 w-6 text-blue-600 mt-1" />
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">Business Hours</h3>
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900">Business Hours</h3>
                     <div className="space-y-1 text-gray-700">
                       <p>Monday - Friday: 8:00 AM - 6:00 PM EST</p>
                       <p>Saturday: 9:00 AM - 4:00 PM EST</p>

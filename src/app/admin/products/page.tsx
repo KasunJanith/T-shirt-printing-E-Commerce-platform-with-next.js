@@ -17,9 +17,8 @@ interface Product {
   price: number
   images: string[]
   inStock: boolean
-  category: {
-    name: string
-  }
+  printSize: string
+  featured: boolean
 }
 
 export default function AdminProducts() {
@@ -92,10 +91,9 @@ export default function AdminProducts() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold text-gray-900">Product Management</h1>
-            <p className="text-gray-700 mt-2">Manage your product inventory</p>
-          </div>
+            <p className="text-gray-700 mt-2">Manage your product inventory</p>          </div>
           <Button asChild>
-            <Link href="/admin/products/new">
+            <Link href="/admin/products/new" className="flex items-center">
               <Plus className="mr-2 h-4 w-4" />
               Add New Product
             </Link>
@@ -123,11 +121,10 @@ export default function AdminProducts() {
               <Package className="mx-auto h-16 w-16 text-gray-400 mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
               <p className="text-gray-700 mb-6">
-                {searchTerm ? 'Try adjusting your search' : 'Get started by adding your first product'}
-              </p>
+                {searchTerm ? 'Try adjusting your search' : 'Get started by adding your first product'}              </p>
               {!searchTerm && (
                 <Button asChild>
-                  <Link href="/admin/products/new">
+                  <Link href="/admin/products/new" className="flex items-center">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Your First Product
                   </Link>
@@ -140,13 +137,12 @@ export default function AdminProducts() {
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b">
-                    <tr>
+                  <thead className="bg-gray-50 border-b">                    <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                         Product
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
-                        Category
+                        Print Size
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                         Price
@@ -175,13 +171,17 @@ export default function AdminProducts() {
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">{product.name}</div>
                             </div>
-                          </div>
+                          </div>                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <Badge variant="info" className="text-xs">
+                            {product.printSize === 'SMALL' ? 'Small Print' :
+                             product.printSize === 'MEDIUM' ? 'Medium Print' :
+                             product.printSize === 'FULL' ? 'Full Print' :
+                             product.printSize}
+                          </Badge>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{product.category.name}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">${product.price.toFixed(2)}</div>
+                          <div className="text-sm font-medium text-gray-900">${Number(product.price).toFixed(2)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <Badge variant={product.inStock ? 'success' : 'danger'}>
@@ -189,13 +189,12 @@ export default function AdminProducts() {
                           </Badge>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <div className="flex justify-end gap-2">
-                            <Button
+                          <div className="flex justify-end gap-2">                            <Button
                               variant="outline"
                               size="sm"
                               asChild
                             >
-                              <Link href={`/admin/products/${product.id}/edit`}>
+                              <Link href={`/admin/products/${product.id}/edit`} className="flex items-center">
                                 <Edit className="h-4 w-4 mr-1" />
                                 Edit
                               </Link>

@@ -62,29 +62,26 @@ export default function CheckoutPage() {
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
       
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-6">
-          {/* Contact Information */}
+        <div className="space-y-6">          {/* Contact Information */}
           <div className="bg-white p-6 rounded-lg border">
-            <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Contact Information</h2>
             <input
               type="email"
               required
               placeholder="Email"
-              className="w-full p-3 border rounded-md"
+              className="w-full p-3 border rounded-md text-gray-900 placeholder-gray-500"
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
             />
-          </div>
-
-          {/* Shipping Address */}
+          </div>          {/* Shipping Address */}
           <div className="bg-white p-6 rounded-lg border">
-            <h2 className="text-xl font-semibold mb-4">Shipping Address</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Shipping Address</h2>
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
                 required
                 placeholder="First Name"
-                className="p-3 border rounded-md"
+                className="p-3 border rounded-md text-gray-900 placeholder-gray-500"
                 value={formData.firstName}
                 onChange={(e) => setFormData({...formData, firstName: e.target.value})}
               />
@@ -92,7 +89,7 @@ export default function CheckoutPage() {
                 type="text"
                 required
                 placeholder="Last Name"
-                className="p-3 border rounded-md"
+                className="p-3 border rounded-md text-gray-900 placeholder-gray-500"
                 value={formData.lastName}
                 onChange={(e) => setFormData({...formData, lastName: e.target.value})}
               />
@@ -101,7 +98,7 @@ export default function CheckoutPage() {
               type="text"
               required
               placeholder="Address"
-              className="w-full p-3 border rounded-md mt-4"
+              className="w-full p-3 border rounded-md mt-4 text-gray-900 placeholder-gray-500"
               value={formData.address}
               onChange={(e) => setFormData({...formData, address: e.target.value})}
             />
@@ -110,7 +107,7 @@ export default function CheckoutPage() {
                 type="text"
                 required
                 placeholder="City"
-                className="p-3 border rounded-md"
+                className="p-3 border rounded-md text-gray-900 placeholder-gray-500"
                 value={formData.city}
                 onChange={(e) => setFormData({...formData, city: e.target.value})}
               />
@@ -118,7 +115,7 @@ export default function CheckoutPage() {
                 type="text"
                 required
                 placeholder="State"
-                className="p-3 border rounded-md"
+                className="p-3 border rounded-md text-gray-900 placeholder-gray-500"
                 value={formData.state}
                 onChange={(e) => setFormData({...formData, state: e.target.value})}
               />
@@ -127,54 +124,52 @@ export default function CheckoutPage() {
               type="text"
               required
               placeholder="ZIP Code"
-              className="w-full p-3 border rounded-md mt-4"
+              className="w-full p-3 border rounded-md mt-4 text-gray-900 placeholder-gray-500"
               value={formData.zipCode}
               onChange={(e) => setFormData({...formData, zipCode: e.target.value})}
             />
-          </div>
-
-          {/* Payment Method */}
+          </div>          {/* Payment Method */}
           <div className="bg-white p-6 rounded-lg border">
-            <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Payment Method</h2>
             <div className="space-y-2">
-              <label className="flex items-center space-x-2">
+              <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="radio"
                   name="payment"
                   value="card"
                   checked={formData.paymentMethod === 'card'}
                   onChange={() => setFormData({...formData, paymentMethod: 'card'})}
+                  className="h-4 w-4 text-blue-600"
                 />
-                <span>Credit/Debit Card</span>
+                <span className="text-gray-900">Credit/Debit Card</span>
               </label>
-              <label className="flex items-center space-x-2">
+              <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="radio"
                   name="payment"
                   value="cod"
                   checked={formData.paymentMethod === 'cod'}
                   onChange={() => setFormData({...formData, paymentMethod: 'cod'})}
+                  className="h-4 w-4 text-blue-600"
                 />
-                <span>Cash on Delivery</span>
+                <span className="text-gray-900">Cash on Delivery</span>
               </label>
             </div>
           </div>
-        </div>
-
-        {/* Order Summary */}
-        <div className="bg-gray-50 p-6 rounded-lg h-fit">
-          <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+        </div>        {/* Order Summary */}
+        <div className="bg-gray-50 p-6 rounded-lg h-fit border">
+          <h2 className="text-xl font-bold mb-4 text-gray-900">Order Summary</h2>
           
           <div className="space-y-3 mb-4">
             {state.items.map((item) => (
-              <div key={item.id} className="flex justify-between">
+              <div key={item.id} className="flex justify-between text-gray-900">
                 <span>{item.name} × {item.quantity}</span>
                 <span>${(item.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
           </div>
           
-          <div className="space-y-2 border-t pt-4">
+          <div className="space-y-2 border-t pt-4 text-gray-900">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span>${state.total.toFixed(2)}</span>
@@ -189,7 +184,7 @@ export default function CheckoutPage() {
             </div>
           </div>
           
-          <Button type="submit" className="w-full mt-6">
+          <Button type="submit" className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white">
             Place Order
           </Button>
         </div>

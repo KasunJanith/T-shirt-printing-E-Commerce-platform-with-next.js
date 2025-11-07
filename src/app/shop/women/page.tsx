@@ -55,10 +55,9 @@ export default function WomenShopPage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl">
               Embrace your unique style with our carefully curated collection of 
               comfortable and fashionable t-shirts for every occasion.
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </p>            <div className="flex flex-wrap gap-4">
               <Button size="lg" variant="secondary" asChild>
-                <Link href="/shop">
+                <Link href="/shop" className="flex items-center">
                   View All Products
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>

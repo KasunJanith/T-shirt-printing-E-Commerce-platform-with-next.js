@@ -96,10 +96,9 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
+      <div className="container mx-auto px-4 py-8">        {/* Back Button */}
         <Button variant="ghost" asChild className="mb-6">
-          <Link href="/shop">
+          <Link href="/shop" className="flex items-center">
             <ChevronLeft className="mr-2 h-4 w-4" />
             Back to Shop
           </Link>
@@ -156,11 +155,10 @@ export default function ProductDetailPage() {
                     <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <span className="ml-2 text-gray-700">(4.9) • 128 reviews</span>
-              </div>
+                <span className="ml-2 text-gray-700">(4.9) • 128 reviews</span>              </div>
 
               <div className="text-4xl font-bold text-blue-600 mb-6">
-                ${product.price.toFixed(2)}
+                ${Number(product.price).toFixed(2)}
               </div>
 
               <p className="text-gray-700 text-lg mb-6">{product.description}</p>

@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
               <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-6 w-6 text-blue-600" />
               </div>
-              <h3 className="font-bold mb-2">Secure</h3>
+              <h3 className="font-bold mb-2 text-gray-900">Secure</h3>
               <p className="text-sm text-gray-700">Your data is protected</p>
             </Card>
 
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
               <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Eye className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="font-bold mb-2">Transparent</h3>
+              <h3 className="font-bold mb-2 text-gray-900">Transparent</h3>
               <p className="text-sm text-gray-700">We're open about data use</p>
             </Card>
 
@@ -47,7 +47,7 @@ export default function PrivacyPolicyPage() {
               <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <UserCheck className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="font-bold mb-2">Your Control</h3>
+              <h3 className="font-bold mb-2 text-gray-900">Your Control</h3>
               <p className="text-sm text-gray-700">You own your data</p>
             </Card>
           </div>
@@ -58,10 +58,9 @@ export default function PrivacyPolicyPage() {
               <Database className="h-6 w-6 mr-3 text-blue-600" />
               Information We Collect
             </h2>
-            
-            <div className="space-y-6">
+              <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-lg mb-3">Personal Information</h3>
+                <h3 className="font-semibold text-lg mb-3 text-gray-900">Personal Information</h3>
                 <p className="text-gray-700 mb-2">
                   When you make a purchase or create an account, we may collect:
                 </p>
@@ -72,10 +71,8 @@ export default function PrivacyPolicyPage() {
                   <li>• Order history and preferences</li>
                   <li>• Account credentials</li>
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Automatically Collected Information</h3>
+              </div>              <div>
+                <h3 className="font-semibold text-lg mb-3 text-gray-900">Automatically Collected Information</h3>
                 <ul className="space-y-2 text-gray-700 ml-6">
                   <li>• IP address and browser type</li>
                   <li>• Device information</li>
@@ -125,11 +122,9 @@ export default function PrivacyPolicyPage() {
                 regulations</span>
               </li>
             </ul>
-          </Card>
-
-          {/* Information Sharing */}
+          </Card>          {/* Information Sharing */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">Information Sharing and Disclosure</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Information Sharing and Disclosure</h2>
             
             <p className="text-gray-700 mb-4">
               We do not sell your personal information. We may share your information with:
@@ -137,23 +132,19 @@ export default function PrivacyPolicyPage() {
             
             <div className="space-y-4">
               <div>
-                <h3 className="font-semibold mb-2">Service Providers</h3>
+                <h3 className="font-semibold mb-2 text-gray-900">Service Providers</h3>
                 <p className="text-gray-700">
                   Third-party companies that help us operate our business (payment processors, 
                   shipping companies, email service providers). They are contractually obligated 
                   to protect your information.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Legal Requirements</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Legal Requirements</h3>
                 <p className="text-gray-700">
                   When required by law, court order, or to protect our rights and safety.
                 </p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">Business Transfers</h3>
+              </div>              <div>
+                <h3 className="font-semibold mb-2 text-gray-900">Business Transfers</h3>
                 <p className="text-gray-700">
                   In connection with a merger, acquisition, or sale of assets, your information 
                   may be transferred to the new owner.
@@ -185,11 +176,9 @@ export default function PrivacyPolicyPage() {
               However, no method of transmission over the internet is 100% secure. We cannot 
               guarantee absolute security.
             </p>
-          </Card>
-
-          {/* Your Rights */}
+          </Card>          {/* Your Rights */}
           <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">Your Privacy Rights</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">Your Privacy Rights</h2>
             
             <p className="text-gray-700 mb-4">You have the right to:</p>
             

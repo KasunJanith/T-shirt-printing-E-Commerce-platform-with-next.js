@@ -32,9 +32,9 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-gray-100 hover:scale-105 transition-transform text-lg px-8 py-6">
-                <Link href="/shop">
+                <Link href="/products" className="flex items-center justify-center">
                   <ShoppingBag className="mr-2 h-5 w-5" />
-                  Shop Now
+                  Browse Products
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-purple-600 text-lg px-8 py-6">
@@ -79,22 +79,31 @@ export default function Home() {
       {/* Categories Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Shop by Category</h2>
+          <h2 className="text-3xl font-bold text-center mb-4 text-gray-900">Choose Your Print Size</h2>
+          <p className="text-center text-gray-700 mb-12 max-w-2xl mx-auto">
+            From subtle logos to bold all-over designs, we offer custom printing in three sizes to match your vision
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <CategoryCard
-              title="Men's Collection"
-              href="/shop/men"
-              image="/images/categories/mens-category.jpg"
+            <PrintSizeCard
+              title="Small Print"
+              description="Perfect for subtle logos or text"
+              icon="📏"
+              size='4" x 4"'
+              href="/products?printSize=SMALL"
             />
-            <CategoryCard
-              title="Women's Collection"
-              href="/shop/women"
-              image="/images/categories/womens-category.jpg"
+            <PrintSizeCard
+              title="Medium Print"
+              description="Standard design covering chest area"
+              icon="🖼️"
+              size='10" x 12"'
+              href="/products?printSize=MEDIUM"
             />
-            <CategoryCard
-              title="Kids' Collection"
-              href="/shop/kids"
-              image="/images/categories/kids-category.jpg"
+            <PrintSizeCard
+              title="Full Print"
+              description="All-over design for maximum impact"
+              icon="🎯"
+              size='12" x 16"'
+              href="/products?printSize=FULL"
             />
           </div>
         </div>
@@ -108,6 +117,32 @@ export default function Home() {
         </div>
       </section>
     </div>
+  )
+}
+
+function PrintSizeCard({ title, description, icon, size, href }: { 
+  title: string
+  description: string
+  icon: string
+  size: string
+  href: string 
+}) {
+  return (
+    <Link href={href} className="group">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 p-8 border-2 border-gray-200 transition-all duration-300 group-hover:shadow-2xl group-hover:border-blue-400 group-hover:-translate-y-2">
+        <div className="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">
+          {icon}
+        </div>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-700 mb-4">{description}</p>
+        <div className="inline-block px-4 py-2 bg-white rounded-lg border border-gray-300 text-sm font-medium text-gray-900">
+          Print Size: {size}
+        </div>
+        <p className="text-blue-600 group-hover:text-blue-700 font-medium mt-4 flex items-center">
+          Explore {title} →
+        </p>
+      </div>
+    </Link>
   )
 }
 

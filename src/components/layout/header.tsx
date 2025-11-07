@@ -41,31 +41,13 @@ export function Header() {
             <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Shirt Canary
             </div>
-          </Link>{/* Desktop Navigation */}
+          </Link>          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             <Link 
-              href="/shop" 
+              href="/products" 
               className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
             >
-              Shop All
-            </Link>
-            <Link 
-              href="/shop/men" 
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-            >
-              Men
-            </Link>
-            <Link 
-              href="/shop/women" 
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-            >
-              Women
-            </Link>
-            <Link 
-              href="/shop/kids" 
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
-            >
-              Kids
+              Browse Products
             </Link>
             <Link 
               href="/about" 
@@ -150,23 +132,21 @@ export function Header() {
                     </div>
                   </div>
                 )}
-              </div>
-            ) : (
+              </div>            ) : (
               <Button variant="ghost" size="icon" asChild className="hover:bg-gray-100">
-                <Link href="/login">
+                <Link href="/login" className="flex items-center justify-center">
                   <User className="h-5 w-5 text-gray-700" />
                 </Link>
               </Button>
             )}
-            
-            {/* Cart Button */}
+              {/* Cart Button */}
             <Button 
               variant="ghost" 
               size="icon" 
               className="relative hover:bg-gray-100" 
               asChild
             >
-              <Link href="/cart">
+              <Link href="/cart" className="flex items-center justify-center relative">
                 <ShoppingCart className="h-5 w-5 text-gray-700" />
                 {state.itemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-blue-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center font-medium">
