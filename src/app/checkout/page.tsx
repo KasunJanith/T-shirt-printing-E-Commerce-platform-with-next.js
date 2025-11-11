@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCart } from '@/context/cart-context'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -10,6 +10,7 @@ export default function CheckoutPage() {
   const { state, dispatch } = useCart()
   const { data: session } = useSession()
   const router = useRouter()
+  const [mounted, setMounted] = useState(false)
   
   const [formData, setFormData] = useState({
     email: session?.user?.email || '',
@@ -22,6 +23,16 @@ export default function CheckoutPage() {
     country: 'US',
     paymentMethod: 'card' as 'card' | 'cod'
   })
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted && state.items.length === 0) {
+      router.push('/cart')
+    }
+  }, [mounted, state.items.length, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -52,9 +63,12 @@ export default function CheckoutPage() {
     }
   }
 
-  if (state.items.length === 0) {
-    router.push('/cart')
-    return null
+  if (!mounted || state.items.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    )
   }
 
   return (

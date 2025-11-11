@@ -4,9 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['localhost', 'images.unsplash.com'],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client'],
-  },
+  serverExternalPackages: ['@prisma/client'],
   eslint: {
     ignoreDuringBuilds: true,
   },
