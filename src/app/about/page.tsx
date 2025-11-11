@@ -10,10 +10,9 @@ export default function AboutPage() {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 text-white py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Shirt Canary</h1>
+          <div className="max-w-4xl mx-auto text-center">            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Shirt Canary</h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              We're passionate about delivering premium quality t-shirts that combine 
+              We&apos;re passionate about delivering premium quality t-shirts that combine 
               comfort, style, and sustainability.
             </p>
           </div>
@@ -34,9 +33,8 @@ export default function AboutPage() {
                   What started as a small workshop has grown into a beloved brand, but 
                   our commitment to quality and customer satisfaction remains unchanged. 
                   Every shirt is crafted with attention to detail and a passion for excellence.
-                </p>
-                <p>
-                  Today, we're proud to serve thousands of customers worldwide, delivering 
+                </p>                <p>
+                  Today, we&apos;re proud to serve thousands of customers worldwide, delivering 
                   premium t-shirts that people love to wear every day.
                 </p>
               </div>
@@ -66,10 +64,9 @@ export default function AboutPage() {
               <Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart className="h-8 w-8 text-green-600" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Sustainability</h3>
+                </div>                <h3 className="text-xl font-bold mb-3 text-gray-900">Sustainability</h3>
                 <p className="text-gray-700">
-                  We're committed to sustainable practices, from sourcing to packaging, 
+                  We&apos;re committed to sustainable practices, from sourcing to packaging, 
                   to protect our planet.
                 </p>
               </Card>
@@ -77,10 +74,9 @@ export default function AboutPage() {
               <Card className="p-8 text-center hover:shadow-lg transition-shadow">
                 <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="h-8 w-8 text-purple-600" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Customer Focus</h3>
+                </div>                <h3 className="text-xl font-bold mb-3 text-gray-900">Customer Focus</h3>
                 <p className="text-gray-700">
-                  Your satisfaction is our priority. We're always here to ensure 
+                  Your satisfaction is our priority. We&apos;re always here to ensure 
                   you have the best experience.
                 </p>
               </Card>

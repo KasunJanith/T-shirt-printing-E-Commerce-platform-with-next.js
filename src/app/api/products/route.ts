@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
+import { Prisma } from '@prisma/client'
 
 // GET /api/products - List all products
 export async function GET(request: Request) {
@@ -12,12 +13,11 @@ export async function GET(request: Request) {
     const minPrice = searchParams.get('minPrice')
     const maxPrice = searchParams.get('maxPrice')
     const search = searchParams.get('search')
-
-    const where: any = {}
+    const where: Prisma.ProductWhereInput = {}
     
     // Filter by print size
     if (printSize && ['SMALL', 'MEDIUM', 'FULL'].includes(printSize)) {
-      where.printSize = printSize
+      where.printSize = printSize as Prisma.EnumPrintSizeFilter | 'SMALL' | 'MEDIUM' | 'FULL'
     }
     
     // Filter by featured
