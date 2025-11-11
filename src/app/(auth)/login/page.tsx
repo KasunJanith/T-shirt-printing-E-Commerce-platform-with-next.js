@@ -44,19 +44,26 @@ export default function LoginPage() {
       if (result?.error) {
         setError('Invalid email or password. Please try again.')
         setLoading(false)
-      } else {
+      } else if (result?.ok) {
+        // Give NextAuth time to set the session cookie
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
         // Fetch session to check user role
         const response = await fetch('/api/auth/session')
         const sessionData = await response.json()
         
+        // Use window.location for a full page reload to ensure session is properly set
         if (sessionData?.user?.role === 'ADMIN') {
-          router.push('/admin/dashboard')
+          window.location.href = '/admin/dashboard'
         } else {
-          router.push('/dashboard')
+          window.location.href = '/dashboard'
         }
-        router.refresh()
+      } else {
+        setError('An unexpected error occurred. Please try again.')
+        setLoading(false)
       }
     } catch (error) {
+      console.error('Login error:', error)
       setError('An unexpected error occurred. Please try again.')
       setLoading(false)
     }
