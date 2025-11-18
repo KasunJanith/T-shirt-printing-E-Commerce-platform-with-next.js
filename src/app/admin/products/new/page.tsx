@@ -3,10 +3,10 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { ArrowLeft, Upload, X } from 'lucide-react'
+import { ArrowLeft, Upload, Image as ImageIcon, Package, DollarSign, Layers, Palette, Ruler, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 
 interface Category {
@@ -78,7 +78,6 @@ export default function NewProduct() {
       })
 
       if (response.ok) {
-        alert('Product created successfully!')
         router.push('/admin/products')
       } else {
         const error = await response.json()
@@ -94,35 +93,53 @@ export default function NewProduct() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        {/* Header */}        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/admin/products" className="flex items-center">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-8">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 animate-fade-in-up">
+          <Button variant="ghost" asChild className="mb-4 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <Link href="/admin/products" className="flex items-center text-gray-600 dark:text-gray-400">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Products
             </Link>
           </Button>
-          <h1 className="text-4xl font-bold text-gray-900">Add New Product</h1>
-          <p className="text-gray-700 mt-2">Fill in the details to create a new product</p>
+          
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+              <Package className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-white">Add New Product</h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">Create a stunning product listing for your store</p>
+            </div>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-gray-900">Product Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in-up animation-delay-500">
+          {/* Product Information */}
+          <Card className="overflow-hidden border-0 shadow-lg dark:bg-gray-900">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
+              <h2 className="text-2xl font-bold text-white flex items-center">
+                <Sparkles className="mr-2 h-6 w-6" />
+                Product Information
+              </h2>
+              <p className="text-blue-100 mt-1">Basic details about your product</p>
+            </div>
+            
+            <div className="p-8 space-y-6">
               {/* Product Name */}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
+              <div className="group">
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                   Product Name *
                 </label>
                 <Input
@@ -132,28 +149,32 @@ export default function NewProduct() {
                   placeholder="e.g., Classic Cotton T-Shirt"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full"
+                  className="w-full h-12 text-lg"
                 />
-              </div>              {/* Description */}
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-900 mb-2">
+              </div>
+
+              {/* Description */}
+              <div className="group">
+                <label htmlFor="description" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                   Description *
                 </label>
                 <textarea
                   id="description"
                   required
-                  placeholder="Enter product description..."
+                  placeholder="Describe your product in detail..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full min-h-[120px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none"
                 />
               </div>
 
               {/* Price and Category */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="price" className="block text-sm font-medium text-gray-900 mb-2">
-                    Price ($) *
+                <div className="group">
+                  <label htmlFor="price" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                    <DollarSign className="h-4 w-4 mr-1" />
+                    Price *
                   </label>
                   <Input
                     id="price"
@@ -163,22 +184,25 @@ export default function NewProduct() {
                     placeholder="29.99"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    className="w-full h-12 text-lg"
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-900 mb-2">
-                    Category *
-                  </label>                  <select
+                <div className="group">
+                  <label htmlFor="category" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                    <Layers className="h-4 w-4 mr-1" />
+                    Print Size Category *
+                  </label>
+                  <select
                     id="category"
                     required
                     value={formData.categoryId}
                     onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                    className="w-full h-12 px-4 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   >
-                    <option value="" className="text-gray-500">Select a category</option>
+                    <option value="">Select print size...</option>
                     {categories.map((category) => (
-                      <option key={category.id} value={category.id} className="text-gray-900">
+                      <option key={category.id} value={category.id}>
                         {category.name}
                       </option>
                     ))}
@@ -187,8 +211,9 @@ export default function NewProduct() {
               </div>
 
               {/* Stock */}
-              <div>
-                <label htmlFor="stock" className="block text-sm font-medium text-gray-900 mb-2">
+              <div className="group">
+                <label htmlFor="stock" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                  <Package className="h-4 w-4 mr-1" />
                   Stock Quantity *
                 </label>
                 <Input
@@ -198,10 +223,26 @@ export default function NewProduct() {
                   placeholder="100"
                   value={formData.stock}
                   onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+                  className="w-full h-12 text-lg"
                 />
-              </div>              {/* Images */}
-              <div>
-                <label htmlFor="images" className="block text-sm font-medium text-gray-900 mb-2">
+              </div>
+            </div>
+          </Card>
+
+          {/* Media & Variants */}
+          <Card className="overflow-hidden border-0 shadow-lg dark:bg-gray-900">
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6">
+              <h2 className="text-2xl font-bold text-white flex items-center">
+                <ImageIcon className="mr-2 h-6 w-6" />
+                Media & Variants
+              </h2>
+              <p className="text-purple-100 mt-1">Images, sizes, and color options</p>
+            </div>
+            
+            <div className="p-8 space-y-6">
+              {/* Images */}
+              <div className="group">
+                <label htmlFor="images" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                   Image URLs (comma-separated) *
                 </label>
                 <textarea
@@ -210,16 +251,19 @@ export default function NewProduct() {
                   placeholder="/images/products/tshirt-1.jpg, /images/products/tshirt-2.jpg"
                   value={formData.images}
                   onChange={(e) => setFormData({ ...formData, images: e.target.value })}
-                  className="w-full min-h-[80px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                  rows={3}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none"
                 />
-                <p className="mt-1 text-sm text-gray-700">
-                  Enter image paths or URLs separated by commas
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                  <Upload className="h-4 w-4 mr-1" />
+                  Separate multiple image URLs with commas
                 </p>
               </div>
 
               {/* Sizes */}
-              <div>
-                <label htmlFor="sizes" className="block text-sm font-medium text-gray-900 mb-2">
+              <div className="group">
+                <label htmlFor="sizes" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                  <Ruler className="h-4 w-4 mr-1" />
                   Available Sizes (comma-separated) *
                 </label>
                 <Input
@@ -229,15 +273,17 @@ export default function NewProduct() {
                   placeholder="S,M,L,XL,XXL"
                   value={formData.sizes}
                   onChange={(e) => setFormData({ ...formData, sizes: e.target.value })}
+                  className="w-full h-12 text-lg"
                 />
-                <p className="mt-1 text-sm text-gray-700">
-                  e.g., S,M,L,XL,XXL
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                  Example: S,M,L,XL,XXL
                 </p>
               </div>
 
               {/* Colors */}
-              <div>
-                <label htmlFor="colors" className="block text-sm font-medium text-gray-900 mb-2">
+              <div className="group">
+                <label htmlFor="colors" className="block text-sm font-semibold text-gray-900 dark:text-white mb-2 flex items-center">
+                  <Palette className="h-4 w-4 mr-1" />
                   Available Colors (comma-separated) *
                 </label>
                 <Input
@@ -247,45 +293,74 @@ export default function NewProduct() {
                   placeholder="Black,White,Gray,Navy,Red"
                   value={formData.colors}
                   onChange={(e) => setFormData({ ...formData, colors: e.target.value })}
+                  className="w-full h-12 text-lg"
                 />
-                <p className="mt-1 text-sm text-gray-700">
-                  e.g., Black,White,Gray,Navy,Red
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                  Example: Black,White,Gray,Navy,Red
                 </p>
               </div>
-
-              {/* Submit Buttons */}
-              <div className="flex gap-4 pt-6 border-t">
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  {loading ? 'Creating...' : 'Create Product'}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => router.push('/admin/products')}
-                  className="flex-1"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </CardContent>
+            </div>
           </Card>
 
+          {/* Submit Buttons */}
+          <div className="flex gap-4 pt-4">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="flex-1 h-14 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+            >
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Creating Product...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="mr-2 h-5 w-5" />
+                  Create Product
+                </>
+              )}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.push('/admin/products')}
+              className="px-8 h-14 text-lg font-semibold"
+            >
+              Cancel
+            </Button>
+          </div>
+
           {/* Help Card */}
-          <Card className="mt-6 bg-blue-50 border-blue-200">
-            <CardContent className="p-6">
-              <h3 className="text-sm font-semibold text-blue-900 mb-2">Product Creation Tips</h3>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Use clear and descriptive product names</li>
-                <li>• Write detailed descriptions to help customers make informed decisions</li>
-                <li>• Ensure image paths are correct (store images in public/images/products/)</li>
-                <li>• Set appropriate stock levels to prevent overselling</li>
-                <li>• Double-check prices before submitting</li>
+          <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-800">
+            <div className="p-6">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center">
+                <Sparkles className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
+                Pro Tips for Great Product Listings
+              </h3>
+              <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 mr-2">✓</span>
+                  <span>Use clear, descriptive product names that customers will search for</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 mr-2">✓</span>
+                  <span>Write detailed descriptions highlighting key features and benefits</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 mr-2">✓</span>
+                  <span>Use high-quality images (store in /public/images/products/)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 mr-2">✓</span>
+                  <span>Choose the correct print size category for accurate product display</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 mr-2">✓</span>
+                  <span>Set realistic stock levels to prevent overselling</span>
+                </li>
               </ul>
-            </CardContent>
+            </div>
           </Card>
         </form>
       </div>

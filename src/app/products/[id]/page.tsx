@@ -16,10 +16,14 @@ interface Product {
   description: string
   price: number
   images: string[]
-  category: string
-  sizes: string[]
-  colors: string[]
-  stock: number
+  printSize: string
+  inStock: boolean
+  variants?: Array<{
+    id: string
+    size: string
+    color: string
+    stock: number
+  }>
 }
 
 export default function ProductDetailPage() {
@@ -35,6 +39,26 @@ export default function ProductDetailPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [addedToCart, setAddedToCart] = useState(false)
 
+  // Helper functions to get unique sizes and colors from variants
+  const getAvailableSizes = () => {
+    if (!product?.variants || product.variants.length === 0) return []
+    return [...new Set(product.variants.map(v => v.size))]
+  }
+
+  const getAvailableColors = () => {
+    if (!product?.variants || product.variants.length === 0) return []
+    return [...new Set(product.variants.map(v => v.color))]
+  }
+
+  const getCurrentStock = () => {
+    if (!product?.variants || product.variants.length === 0) return 0
+    
+    const variant = product.variants.find(
+      v => v.size === selectedSize && v.color === selectedColor
+    )
+    
+    return variant ? variant.stock : 0
+  }
   useEffect(() => {
     if (params.id) {
       fetchProduct(params.id as string)
@@ -47,8 +71,15 @@ export default function ProductDetailPage() {
       if (res.ok) {
         const data = await res.json()
         setProduct(data)
-        if (data.sizes.length > 0) setSelectedSize(data.sizes[0])
-        if (data.colors.length > 0) setSelectedColor(data.colors[0])
+        
+        // Get unique sizes and colors from variants
+        if (data.variants && data.variants.length > 0) {
+          const sizes = [...new Set(data.variants.map((v: { size: string }) => v.size))]
+          const colors = [...new Set(data.variants.map((v: { color: string }) => v.color))]
+          
+          if (sizes.length > 0) setSelectedSize(sizes[0] as string)
+          if (colors.length > 0) setSelectedColor(colors[0] as string)
+        }
       } else {
         router.push('/shop')
       }
@@ -141,55 +172,61 @@ export default function ProductDetailPage() {
                 ))}
               </div>
             )}
-          </div>
-
-          {/* Product Info */}
+          </div>          {/* Product Info */}
           <div>
             <div className="mb-4">
-              <Badge className="mb-2">{product.category}</Badge>
+              <Badge className="mb-2">{product.printSize} Print</Badge>
               <h1 className="text-4xl font-bold mb-4 text-gray-900">{product.name}</h1>
               
-              {/* Rating */}              <div className="flex items-center mb-4">
+              {/* Rating */}
+              <div className="flex items-center mb-4">
                 <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <span className="ml-2 text-gray-700">(4.9) • 128 reviews</span>              </div>
+                <span className="ml-2 text-gray-700">(4.9) • 128 reviews</span>
+              </div>
 
               <div className="text-4xl font-bold text-blue-600 mb-6">
                 ${Number(product.price).toFixed(2)}
               </div>
 
               <p className="text-gray-700 text-lg mb-6">{product.description}</p>
-            </div>            {/* Size Selection */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-900 mb-3">
-                Select Size
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {product.sizes.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`px-6 py-3 border-2 rounded-lg font-medium transition-all ${
-                      selectedSize === size
-                        ? 'border-blue-600 bg-blue-50 text-blue-600'
-                        : 'border-gray-300 hover:border-gray-400'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
+            </div>
+
+            {/* Size Selection */}
+            {getAvailableSizes().length > 0 && (
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-900 mb-3">
+                  Select Size
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  {getAvailableSizes().map((size: string) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`px-6 py-3 border-2 rounded-lg font-medium transition-all ${
+                        selectedSize === size
+                          ? 'border-blue-600 bg-blue-50 text-blue-600'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>            {/* Color Selection */}
-            {product.colors.length > 0 && (
+            )}
+
+            {/* Color Selection */}
+            {getAvailableColors().length > 0 && (
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-900 mb-3">
                   Select Color
                 </label>
                 <div className="flex flex-wrap gap-3">
-                  {product.colors.map((color) => (
+                  {getAvailableColors().map((color: string) => (
                     <button
                       key={color}
                       onClick={() => setSelectedColor(color)}
@@ -216,14 +253,15 @@ export default function ProductDetailPage() {
                 >
                   -
                 </button>
-                <span className="text-xl font-semibold w-12 text-center text-gray-900">{quantity}</span>                <button
-                  onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                <span className="text-xl font-semibold w-12 text-center text-gray-900">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(Math.min(getCurrentStock(), quantity + 1))}
                   className="w-10 h-10 border-2 border-gray-300 rounded-lg hover:border-gray-400 font-bold"
                 >
                   +
                 </button>
                 <span className="text-gray-700 ml-4">
-                  {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                  {getCurrentStock() > 0 ? `${getCurrentStock()} in stock` : 'Out of stock'}
                 </span>
               </div>
             </div>
@@ -234,7 +272,7 @@ export default function ProductDetailPage() {
                 size="lg"
                 className="w-full"
                 onClick={handleAddToCart}
-                disabled={product.stock === 0 || !selectedSize}
+                disabled={getCurrentStock() === 0 || !selectedSize}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 {addedToCart ? 'Added to Cart!' : 'Add to Cart'}
@@ -244,7 +282,7 @@ export default function ProductDetailPage() {
                 <Heart className="mr-2 h-5 w-5" />
                 Add to Wishlist
               </Button>
-            </div>            {/* Features */}
+            </div>{/* Features */}
             <Card className="p-6 space-y-4">
               <div className="flex items-start space-x-3">
                 <Truck className="h-6 w-6 text-blue-600 mt-1" />
@@ -282,16 +320,20 @@ export default function ProductDetailPage() {
                   {product.description} Made with premium quality materials for ultimate 
                   comfort and durability. Perfect for everyday wear, casual outings, or 
                   lounging at home.
-                </p>              </div>
-              <div>
+                </p>              </div>              <div>
                 <h3 className="font-semibold mb-4 text-gray-900">Specifications</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li>• 100% Premium Cotton</li>
                   <li>• Pre-shrunk fabric</li>
                   <li>• Reinforced stitching</li>
                   <li>• Machine washable</li>
-                  <li>• Available sizes: {product.sizes.join(', ')}</li>
-                  <li>• Colors: {product.colors.join(', ')}</li>
+                  <li>• Print Size: {product.printSize}</li>
+                  {getAvailableSizes().length > 0 && (
+                    <li>• Available sizes: {getAvailableSizes().join(', ')}</li>
+                  )}
+                  {getAvailableColors().length > 0 && (
+                    <li>• Colors: {getAvailableColors().join(', ')}</li>
+                  )}
                 </ul>
               </div>
             </div>

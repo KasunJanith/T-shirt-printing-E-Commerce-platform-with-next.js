@@ -3,9 +3,9 @@ import { RotateCcw, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
 
 export default function ReturnsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white py-16">
+      <div className="bg-gradient-to-r from-green-600 to-teal-600 dark:from-green-900 dark:to-teal-900 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Return & Exchange Policy</h1>
           <p className="text-xl text-white/90">
@@ -17,37 +17,37 @@ export default function ReturnsPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Key Points */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">            <Card className="p-6 text-center">
-              <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="h-6 w-6 text-green-600" />
+          <div className="grid md:grid-cols-3 gap-6 mb-12">            <Card className="p-6 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="bg-green-100 dark:bg-green-900/30 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="font-bold mb-2 text-gray-900">30 Days</h3>
-              <p className="text-sm text-gray-700">Return window for all items</p>
+              <h3 className="font-bold mb-2 text-gray-900 dark:text-white">30 Days</h3>
+              <p className="text-sm text-gray-700 dark:text-gray-300">Return window for all items</p>
             </Card>
 
-            <Card className="p-6 text-center">
-              <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <RotateCcw className="h-6 w-6 text-blue-600" />
+            <Card className="p-6 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="bg-blue-100 dark:bg-blue-900/30 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <RotateCcw className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="font-bold mb-2 text-gray-900">Free Returns</h3>
-              <p className="text-sm text-gray-700">On defective products</p>
+              <h3 className="font-bold mb-2 text-gray-900 dark:text-white">Free Returns</h3>
+              <p className="text-sm text-gray-700 dark:text-gray-300">On defective products</p>
             </Card>
 
-            <Card className="p-6 text-center">
-              <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertCircle className="h-6 w-6 text-purple-600" />
+            <Card className="p-6 text-center dark:border-gray-700 dark:bg-gray-800">
+              <div className="bg-purple-100 dark:bg-purple-900/30 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertCircle className="h-6 w-6 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="font-bold mb-2 text-gray-900">Easy Process</h3>
-              <p className="text-sm text-gray-700">Simple return steps</p>
+              <h3 className="font-bold mb-2 text-gray-900 dark:text-white">Easy Process</h3>
+              <p className="text-sm text-gray-700 dark:text-gray-300">Simple return steps</p>
             </Card>
           </div>          {/* Return Policy */}
-          <Card className="p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6 text-gray-900">Return Policy</h2>
+          <Card className="p-8 mb-8 dark:border-gray-700 dark:bg-gray-800">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Return Policy</h2>
             
             <div className="space-y-6">
               <div>
-                <h3 className="font-semibold text-lg mb-3 flex items-center">
-                  <CheckCircle className="h-5 w-5 mr-2 text-green-600" />
+                <h3 className="font-semibold text-lg mb-3 flex items-center text-gray-900 dark:text-white">
+                  <CheckCircle className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" />
                   Eligible Returns
                 </h3>
                 <ul className="space-y-2 text-gray-700 ml-7">

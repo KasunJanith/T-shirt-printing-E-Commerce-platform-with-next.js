@@ -1,88 +1,166 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { ProductGrid } from '@/components/products/product-grid'
-import { ShoppingBag, Truck, Shield, Sparkles } from 'lucide-react'
+import { ShoppingBag, Truck, Shield, Sparkles, Star, Award, Clock, TrendingUp, ArrowRight, Package } from 'lucide-react'
+import { prisma } from '@/lib/db'
 
-export default function Home() {
+async function getFeaturedProducts() {
+  try {
+    const products = await prisma.product.findMany({
+      take: 8,
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        variants: true,
+      },
+    })
+    return products
+  } catch (error) {
+    console.error('Error fetching featured products:', error)
+    return []
+  }
+}
+
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts()
+
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
+    <div className="bg-white dark:bg-gray-950">
+      {/* Hero Section with Animation */}
+      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900 text-white overflow-hidden min-h-[90vh] flex items-center">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-black/10 dark:bg-black/30"></div>
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl opacity-10 dark:opacity-20 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl opacity-10 dark:opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl opacity-10 dark:opacity-20 animate-blob animation-delay-4000"></div>
         </div>
-        <div className="relative container mx-auto px-4 py-32">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">New Collection 2025</span>
+        
+        {/* Hero Content */}
+        <div className="relative container mx-auto px-4 py-20">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 bg-white/10 dark:bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-bounce-slow">
+                <Sparkles className="w-4 h-4 animate-pulse" />
+                <span className="text-sm font-medium">New Collection 2025</span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-slide-in-left">
+                Premium Quality
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-pink-200 dark:from-yellow-300 dark:to-pink-300 animate-gradient">
+                  T-Shirts
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl mb-10 text-blue-50 dark:text-blue-100 leading-relaxed animate-fade-in">
+                Discover our exclusive collection of comfortable and stylish t-shirts for every occasion.
+              </p>
+              <div className="flex flex-wrap gap-4 animate-fade-in-up animation-delay-500">
+                <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6 group">
+                  <Link href="/products" className="flex items-center justify-center">
+                    <ShoppingBag className="mr-2 h-5 w-5 group-hover:animate-bounce" />
+                    Browse Products
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-purple-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6">
+                  <Link href="/about">
+                    Learn More
+                  </Link>
+                </Button>
+              </div>
+              
+              {/* Stats */}
+              <div className="mt-12 grid grid-cols-3 gap-6 animate-fade-in-up animation-delay-1000">
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-1">10K+</div>
+                  <div className="text-sm text-blue-100 dark:text-blue-200">Happy Customers</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-1">500+</div>
+                  <div className="text-sm text-blue-100 dark:text-blue-200">Products</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold mb-1">4.9★</div>
+                  <div className="text-sm text-blue-100 dark:text-blue-200">Rating</div>
+                </div>
+              </div>
             </div>
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
-              Premium Quality
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-pink-200">
-                T-Shirts
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-10 text-blue-50 leading-relaxed">
-              Discover our exclusive collection of comfortable and stylish t-shirts for every occasion.
+            
+            {/* Hero Image/Illustration */}
+            <div className="hidden lg:block animate-fade-in-right">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-tr from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse-slow"></div>
+                <div className="relative bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:scale-105 transition-transform duration-500">
+                  <div className="aspect-square bg-gradient-to-br from-blue-400 to-purple-500 dark:from-blue-600 dark:to-purple-700 rounded-2xl flex items-center justify-center">
+                    <ShoppingBag className="w-32 h-32 text-white opacity-80" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-scroll"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section with Animation */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="container mx-auto px-4 relative">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Why Choose Us</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              We provide the best service and quality for your custom t-shirt needs
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-gray-100 hover:scale-105 transition-transform text-lg px-8 py-6">
-                <Link href="/products" className="flex items-center justify-center">
-                  <ShoppingBag className="mr-2 h-5 w-5" />
-                  Browse Products
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-purple-600 text-lg px-8 py-6">
-                <Link href="/about">
-                  Learn More
-                </Link>
-              </Button>
-            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <FeatureCard
+              icon={<Truck className="w-8 h-8" />}
+              title="Free Shipping"
+              description="On orders over $50"
+              color="blue"
+              delay="0"
+            />
+            <FeatureCard
+              icon={<Shield className="w-8 h-8" />}
+              title="Secure Payment"
+              description="100% secure transactions"
+              color="purple"
+              delay="100"
+            />
+            <FeatureCard
+              icon={<Award className="w-8 h-8" />}
+              title="Premium Quality"
+              description="Best fabric & print quality"
+              color="pink"
+              delay="200"
+            />
+            <FeatureCard
+              icon={<Clock className="w-8 h-8" />}
+              title="Fast Delivery"
+              description="Quick processing time"
+              color="green"
+              delay="300"
+            />
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+      {/* Print Sizes Section with Animation */}
+      <section className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600 mb-4">
-                <Truck className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Free Shipping</h3>
-              <p className="text-gray-700">On orders over $50</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 text-purple-600 mb-4">
-                <Shield className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Secure Payment</h3>
-              <p className="text-gray-700">100% secure transactions</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-pink-100 text-pink-600 mb-4">
-                <Sparkles className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900">Premium Quality</h3>
-              <p className="text-gray-700">Best fabric & print quality</p>
-            </div>
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Choose Your Print Size</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              From subtle logos to bold all-over designs, we offer custom printing in three sizes to match your vision
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-gray-900">Choose Your Print Size</h2>
-          <p className="text-center text-gray-700 mb-12 max-w-2xl mx-auto">
-            From subtle logos to bold all-over designs, we offer custom printing in three sizes to match your vision
-          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <PrintSizeCard
               title="Small Print"
@@ -109,11 +187,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-16 bg-gray-50">
+      {/* Featured Products - Dynamic */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Featured Products</h2>
-          <ProductGrid />
+          <div className="text-center mb-16 animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-full mb-4">
+              <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Recently Added</span>
+            </div>
+            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Featured Products</h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Check out our latest arrivals and trending designs
+            </p>
+          </div>
+          
+          {featuredProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredProducts.map((product, index) => (
+                <ProductCard key={product.id} product={product} index={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Package className="w-16 h-16 mx-auto mb-4 text-gray-400 dark:text-gray-600" />
+              <p className="text-gray-600 dark:text-gray-400">No products available yet</p>
+            </div>
+          )}
+          
+          <div className="text-center mt-12 animate-fade-in-up">
+            <Button asChild size="lg" className="group">
+              <Link href="/products">
+                View All Products
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center animate-fade-in-up">
+            <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
+            <p className="text-xl mb-8 text-blue-100 dark:text-blue-200">
+              Subscribe to our newsletter for exclusive offers and new arrivals
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-6 py-4 rounded-lg text-gray-900 dark:text-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
+              />
+              <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100 dark:hover:bg-gray-200">
+                Subscribe
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -128,19 +258,101 @@ function PrintSizeCard({ title, description, icon, size, href }: {
   href: string 
 }) {
   return (
-    <Link href={href} className="group">
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 p-8 border-2 border-gray-200 transition-all duration-300 group-hover:shadow-2xl group-hover:border-blue-400 group-hover:-translate-y-2">
-        <div className="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">
+    <Link href={href} className="group animate-fade-in-up">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-8 border-2 border-gray-200 dark:border-gray-700 transition-all duration-300 group-hover:shadow-2xl group-hover:border-blue-400 dark:group-hover:border-blue-500 group-hover:-translate-y-2 group-hover:scale-105">
+        <div className="text-6xl mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
           {icon}
         </div>
-        <h3 className="text-2xl font-semibold text-gray-900 mb-2">{title}</h3>
-        <p className="text-gray-700 mb-4">{description}</p>
-        <div className="inline-block px-4 py-2 bg-white rounded-lg border border-gray-300 text-sm font-medium text-gray-900">
+        <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
+        <p className="text-gray-700 dark:text-gray-300 mb-4">{description}</p>
+        <div className="inline-block px-4 py-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-900 dark:text-gray-100">
           Print Size: {size}
         </div>
-        <p className="text-blue-600 group-hover:text-blue-700 font-medium mt-4 flex items-center">
-          Explore {title} →
+        <p className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 font-medium mt-4 flex items-center">
+          Explore {title} 
+          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform" />
         </p>
+      </div>
+    </Link>
+  )
+}
+
+function FeatureCard({ icon, title, description, color, delay }: {
+  icon: React.ReactNode
+  title: string
+  description: string
+  color: string
+  delay: string
+}) {
+  const colorClasses = {
+    blue: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
+    purple: 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400',
+    pink: 'bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400',
+    green: 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400',
+  }
+
+  return (
+    <div 
+      className="group text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 animate-fade-in-up border border-gray-200 dark:border-gray-700"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${colorClasses[color as keyof typeof colorClasses]} mb-4 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`}>
+        {icon}
+      </div>
+      <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{title}</h3>
+      <p className="text-gray-600 dark:text-gray-400">{description}</p>
+    </div>
+  )
+}
+
+function ProductCard({ product, index }: { product: any; index: number }) {
+  const formatPrice = (price: any) => {
+    return `$${Number(price).toFixed(2)}`
+  }
+
+  return (
+    <Link 
+      href={`/products/${product.id}`} 
+      className="group animate-fade-in-up"
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:scale-105">
+        <div className="aspect-square bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
+          {product.images && product.images.length > 0 ? (
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <ShoppingBag className="w-16 h-16 text-gray-300 dark:text-gray-600" />
+            </div>
+          )}
+          {!product.inStock && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <span className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">Out of Stock</span>
+            </div>
+          )}
+        </div>
+        <div className="p-4">
+          <h3 className="font-semibold text-lg mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-gray-900 dark:text-white line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
+            {product.description}
+          </p>
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+              {formatPrice(product.price)}
+            </span>
+            <div className="flex items-center gap-1">
+              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+              <span className="text-sm text-gray-600 dark:text-gray-400">4.9</span>
+            </div>
+          </div>
+        </div>
       </div>
     </Link>
   )
@@ -149,7 +361,7 @@ function PrintSizeCard({ title, description, icon, size, href }: {
 function CategoryCard({ title, href, image }: { title: string; href: string; image: string }) {
   return (
     <Link href={href} className="group">
-      <div className="relative overflow-hidden rounded-lg bg-gray-200 aspect-[4/5]">
+      <div className="relative overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 aspect-[4/5]">
         <Image 
           src={image} 
           alt={title}

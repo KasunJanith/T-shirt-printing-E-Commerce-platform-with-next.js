@@ -133,11 +133,11 @@ export default function AdminProducts() {
             </CardContent>
           </Card>
         ) : (
-          <Card>
-            <CardContent className="p-0">
+          <Card>            <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b">                    <tr>
+                  <thead className="bg-gray-50 border-b">
+                    <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                         Product
                       </th>

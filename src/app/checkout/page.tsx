@@ -5,12 +5,18 @@ import { useCart } from '@/context/cart-context'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { CreditCard, Lock, CheckCircle } from 'lucide-react'
+import { loadStripe } from '@stripe/stripe-js'
+
+// Initialize Stripe
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function CheckoutPage() {
   const { state, dispatch } = useCart()
   const { data: session } = useSession()
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+  const [loading, setLoading] = useState(false)
   
   const [formData, setFormData] = useState({
     email: session?.user?.email || '',
@@ -21,21 +27,58 @@ export default function CheckoutPage() {
     state: '',
     zipCode: '',
     country: 'US',
-    paymentMethod: 'card' as 'card' | 'cod'
+    paymentMethod: 'stripe' as 'stripe' | 'cod'
   })
 
   useEffect(() => {
     setMounted(true)
   }, [])
-
   useEffect(() => {
     if (mounted && state.items.length === 0) {
       router.push('/cart')
     }
   }, [mounted, state.items.length, router])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleStripeCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
+    
+    try {
+      // Create Stripe checkout session
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: state.items,
+          shippingAddress: formData,
+        })
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        alert(error.error || 'Failed to create checkout session')
+        setLoading(false)
+        return
+      }
+
+      const { url } = await response.json()
+      
+      // Redirect to Stripe Checkout
+      if (url) {
+        window.location.href = url
+      } else {
+        throw new Error('No checkout URL returned')
+      }
+    } catch (error) {
+      console.error('Checkout error:', error)
+      alert('An error occurred during checkout')
+      setLoading(false)
+    }
+  }
+
+  const handleCODCheckout = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
     
     try {
       const response = await fetch('/api/orders', {
@@ -43,23 +86,32 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: state.items,
-          total: state.total + 5,
           shippingAddress: formData,
-          paymentMethod: formData.paymentMethod,
-          customerEmail: formData.email,
-          customerName: `${formData.firstName} ${formData.lastName}`
+          paymentMethod: 'cod',
         })
       })
 
-      if (response.ok) {
-        const order = await response.json()
-        dispatch({ type: 'CLEAR_CART' })
-        router.push(`/order-confirmation/${order.id}`)
-      } else {
+      if (!response.ok) {
         alert('Failed to create order')
+        setLoading(false)
+        return
       }
+
+      const order = await response.json()
+      dispatch({ type: 'CLEAR_CART' })
+      router.push(`/order-confirmation/${order.id}`)
     } catch (error) {
-      alert('An error occurred')
+      console.error('Order error:', error)
+      alert('An error occurred while placing order')
+      setLoading(false)
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    if (formData.paymentMethod === 'stripe') {
+      handleStripeCheckout(e)
+    } else {
+      handleCODCheckout(e)
     }
   }
 
@@ -144,18 +196,18 @@ export default function CheckoutPage() {
             />
           </div>          {/* Payment Method */}
           <div className="bg-white p-6 rounded-lg border">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">Payment Method</h2>
-            <div className="space-y-2">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Payment Method</h2>            <div className="space-y-2">
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="radio"
                   name="payment"
-                  value="card"
-                  checked={formData.paymentMethod === 'card'}
-                  onChange={() => setFormData({...formData, paymentMethod: 'card'})}
+                  value="stripe"
+                  checked={formData.paymentMethod === 'stripe'}
+                  onChange={() => setFormData({...formData, paymentMethod: 'stripe'})}
                   className="h-4 w-4 text-blue-600"
                 />
-                <span className="text-gray-900">Credit/Debit Card</span>
+                <CreditCard className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-900">Credit/Debit Card (Stripe)</span>
               </label>
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
@@ -197,9 +249,22 @@ export default function CheckoutPage() {
               <span>${(state.total + 5).toFixed(2)}</span>
             </div>
           </div>
-          
-          <Button type="submit" className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white">
-            Place Order
+            <Button 
+            type="submit" 
+            className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white"
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                Processing...
+              </div>
+            ) : (
+              <>
+                <Lock className="inline h-5 w-5 mr-2" />
+                {formData.paymentMethod === 'stripe' ? 'Proceed to Payment' : 'Place Order'}
+              </>
+            )}
           </Button>
         </div>
       </form>

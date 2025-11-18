@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
-// GET /api/categories - List all categories
+// GET /api/categories - List all print size categories
 export async function GET() {
   try {
-    const categories = await prisma.category.findMany({
-      orderBy: {
-        name: 'asc',
-      },
-    })
+    // Return print sizes as categories
+    const categories = [
+      { id: '1', name: 'Small Print', slug: 'small-print' },
+      { id: '2', name: 'Medium Print', slug: 'medium-print' },
+      { id: '3', name: 'Full Print', slug: 'full-print' },
+    ]
 
     return NextResponse.json({ categories })
   } catch (error) {
@@ -22,7 +22,7 @@ export async function GET() {
   }
 }
 
-// POST /api/categories - Create new category (Admin only)
+// POST /api/categories - Not implemented (using static print sizes)
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions)
@@ -31,30 +31,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const body = await request.json()
-    const { name } = body
-
-    if (!name) {
-      return NextResponse.json(
-        { error: 'Category name is required' },
-        { status: 400 }
-      )
-    }
-
-    // Generate slug from name
-    const slug = name
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '')
-
-    const category = await prisma.category.create({
-      data: {
-        name,
-        slug,
-      },
-    })
-
-    return NextResponse.json({ category }, { status: 201 })
+    return NextResponse.json(
+      { error: 'Categories are predefined print sizes and cannot be created' },
+      { status: 400 }
+    )
   } catch (error) {
     console.error('Error creating category:', error)
     return NextResponse.json(
