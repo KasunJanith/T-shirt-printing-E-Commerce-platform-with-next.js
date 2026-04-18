@@ -1,8 +1,19 @@
 import { NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function GET(request: Request) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Stripe is not configured. Please try again later.' },
+        { status: 500 }
+      )
+    }
+
     const { searchParams } = new URL(request.url)
     const sessionId = searchParams.get('session_id')
 

@@ -43,28 +43,32 @@ export default async function Home() {
             <div className="animate-fade-in-up">
               <div className="inline-flex items-center gap-2 bg-white/10 dark:bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-bounce-slow">
                 <Sparkles className="w-4 h-4 animate-pulse" />
-                <span className="text-sm font-medium">New Collection 2025</span>
+                <span className="text-sm font-medium">Custom Printing Services 2025</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-slide-in-left">
-                Premium Quality
+                Design Your Own
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-pink-200 dark:from-yellow-300 dark:to-pink-300 animate-gradient">
-                  T-Shirts
+                  Custom T-Shirts
                 </span>
               </h1>
               <p className="text-xl md:text-2xl mb-10 text-blue-50 dark:text-blue-100 leading-relaxed animate-fade-in">
-                Discover our exclusive collection of comfortable and stylish t-shirts for every occasion.
+                High-quality custom t-shirt printing with fast turnaround. Perfect for events, teams, businesses, and personal style.
               </p>
               <div className="flex flex-wrap gap-4 animate-fade-in-up animation-delay-500">
-                <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-gray-100 hover:scale-105 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6 group">
-                  <Link href="/products" className="flex items-center justify-center">
-                    <ShoppingBag className="mr-2 h-5 w-5 group-hover:animate-bounce" />
-                    Browse Products
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-white text-indigo-600 dark:text-indigo-900 font-semibold shadow-xl hover:shadow-2xl border border-white/70 hover:bg-white/90 hover:scale-105 transition-all duration-300 text-lg px-8 py-6 group focus-visible:ring-offset-0"
+                >
+                  <Link href="/products" className="flex items-center justify-center gap-2 text-current">
+                    <Package className="h-5 w-5 group-hover:animate-bounce" />
+                    Start Designing
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-purple-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 text-lg px-8 py-6">
-                  <Link href="/about">
-                    Learn More
+                  <Link href="/products">
+                    View Catalog
                   </Link>
                 </Button>
               </div>
@@ -72,27 +76,53 @@ export default async function Home() {
               {/* Stats */}
               <div className="mt-12 grid grid-cols-3 gap-6 animate-fade-in-up animation-delay-1000">
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">10K+</div>
-                  <div className="text-sm text-blue-100 dark:text-blue-200">Happy Customers</div>
+                  <div className="text-3xl font-bold mb-1">15K+</div>
+                  <div className="text-sm text-blue-100 dark:text-blue-200">Orders Printed</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-1">500+</div>
-                  <div className="text-sm text-blue-100 dark:text-blue-200">Products</div>
+                  <div className="text-3xl font-bold mb-1">24hr</div>
+                  <div className="text-sm text-blue-100 dark:text-blue-200">Fast Turnaround</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-1">4.9★</div>
-                  <div className="text-sm text-blue-100 dark:text-blue-200">Rating</div>
+                  <div className="text-sm text-blue-100 dark:text-blue-200">Customer Rating</div>
                 </div>
               </div>
             </div>
             
-            {/* Hero Image/Illustration */}
+            {/* Hero Image */}
             <div className="hidden lg:block animate-fade-in-right">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-tr from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse-slow"></div>
-                <div className="relative bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:scale-105 transition-transform duration-500">
-                  <div className="aspect-square bg-gradient-to-br from-blue-400 to-purple-500 dark:from-blue-600 dark:to-purple-700 rounded-2xl flex items-center justify-center">
-                    <ShoppingBag className="w-32 h-32 text-white opacity-80" />
+                <div className="relative bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:scale-105 transition-transform duration-500 shadow-2xl">
+                  <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                    <Image
+                      src="/images/products/tshirt1.jpeg"
+                      alt="Custom Printed T-Shirts"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    
+                    {/* Floating Badge */}
+                    <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 animate-bounce-slow">
+                      <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                      <span className="font-semibold text-sm">Premium Quality</span>
+                    </div>
+                    
+                    {/* Bottom Info Card */}
+                    <div className="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-4 rounded-xl shadow-lg">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900 dark:text-white">Custom Printing</p>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">Any Design, Any Color</p>
+                        </div>
+                        <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                          Order Now
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -113,38 +143,38 @@ export default async function Home() {
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Why Choose Us</h2>
+            <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Why Choose Our Printing Service</h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              We provide the best service and quality for your custom t-shirt needs
+              Professional custom t-shirt printing with exceptional quality and service for businesses, events, and individuals
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <FeatureCard
-              icon={<Truck className="w-8 h-8" />}
-              title="Free Shipping"
-              description="On orders over $50"
+              icon={<Award className="w-8 h-8" />}
+              title="Premium Quality"
+              description="High-quality prints that last"
               color="blue"
               delay="0"
             />
             <FeatureCard
-              icon={<Shield className="w-8 h-8" />}
-              title="Secure Payment"
-              description="100% secure transactions"
+              icon={<Clock className="w-8 h-8" />}
+              title="Fast Turnaround"
+              description="24-hour production time"
               color="purple"
               delay="100"
             />
             <FeatureCard
-              icon={<Award className="w-8 h-8" />}
-              title="Premium Quality"
-              description="Best fabric & print quality"
+              icon={<Sparkles className="w-8 h-8" />}
+              title="Custom Designs"
+              description="Any design, any color"
               color="pink"
               delay="200"
             />
             <FeatureCard
-              icon={<Clock className="w-8 h-8" />}
-              title="Fast Delivery"
-              description="Quick processing time"
+              icon={<Truck className="w-8 h-8" />}
+              title="Free Shipping"
+              description="On bulk orders over $50"
               color="green"
               delay="300"
             />
@@ -239,7 +269,7 @@ export default async function Home() {
                 placeholder="Enter your email"
                 className="flex-1 px-6 py-4 rounded-lg text-gray-900 dark:text-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
               />
-              <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100 dark:hover:bg-gray-200">
+              <Button size="lg" className="bg-white text-white-600 hover:bg-gray-100 dark:hover:bg-gray-200">
                 Subscribe
               </Button>
             </div>

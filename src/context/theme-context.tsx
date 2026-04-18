@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -13,34 +13,36 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
-  const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
-    setMounted(true)
-    // Load theme from localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
-      setTheme(savedTheme)
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark')
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      const initialTheme = prefersDark ? 'dark' : 'light'
-      setTheme(initialTheme)
-      document.documentElement.classList.toggle('dark', initialTheme === 'dark')
-    }
+  const applyTheme = useCallback((nextTheme: Theme) => {
+    if (typeof document === 'undefined') return
+    const root = document.documentElement
+    root.classList.toggle('dark', nextTheme === 'dark')
+    root.dataset.theme = nextTheme
   }, [])
 
   useEffect(() => {
-    if (mounted) {
-      document.documentElement.classList.toggle('dark', theme === 'dark')
+    const savedTheme = localStorage.getItem('theme') as Theme | null
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      setTheme(savedTheme)
+      applyTheme(savedTheme)
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      const initialTheme: Theme = prefersDark ? 'dark' : 'light'
+      setTheme(initialTheme)
+      applyTheme(initialTheme)
     }
-  }, [theme, mounted])
+  }, [applyTheme])
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
+    setTheme(prevTheme => {
+      const nextTheme: Theme = prevTheme === 'light' ? 'dark' : 'light'
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme', nextTheme)
+      }
+      applyTheme(nextTheme)
+      return nextTheme
+    })
   }
 
   return (
