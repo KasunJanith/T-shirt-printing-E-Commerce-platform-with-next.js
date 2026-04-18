@@ -1,21 +1,29 @@
 import Stripe from 'stripe'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not set in environment variables')
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripeApiVersion: Stripe.LatestApiVersion = '2025-09-30.clover'
+
+// Only initialize Stripe if the secret key is available
+let stripe: Stripe | null = null
+
+try {
+  if (stripeSecretKey) {
+    stripe = new Stripe(stripeSecretKey, {
+      apiVersion: stripeApiVersion,
+      typescript: true,
+    })
+  }
+} catch (error) {
+  // Silently fail during build - Stripe will be null
+  console.debug('Stripe initialization skipped (expected during build)')
 }
 
-// Initialize Stripe with secret key
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2025-09-30.clover',
-  typescript: true,
-})
+export { stripe }
 
-// Helper function to format amount for Stripe (cents)
 export function formatAmountForStripe(amount: number): number {
   return Math.round(amount * 100)
 }
 
-// Helper function to format amount from Stripe (dollars)
 export function formatAmountFromStripe(amount: number): number {
   return amount / 100
 }

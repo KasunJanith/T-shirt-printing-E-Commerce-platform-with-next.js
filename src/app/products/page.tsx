@@ -9,10 +9,12 @@ interface Product {
   id: string
   name: string
   price: number
-  images: string[]
+  images?: string[]
   category?: string
   inStock?: boolean
   stock?: number
+  description?: string
+  printSize?: 'SMALL' | 'MEDIUM' | 'FULL'
 }
 
 export default function ProductsPage() {
@@ -39,10 +41,13 @@ export default function ProductsPage() {
       const response = await fetch(`/api/products?${params.toString()}`)
       if (response.ok) {
         const data = await response.json()
-        setProducts(data)
+        setProducts(data?.products ?? [])
+      } else {
+        setProducts([])
       }
     } catch (error) {
       console.error('Failed to fetch products:', error)
+      setProducts([])
     } finally {
       setLoading(false)
     }
@@ -181,7 +186,7 @@ export default function ProductsPage() {
             <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
               Showing {products.length} product{products.length !== 1 ? 's' : ''}
             </div>
-            <ProductGrid products={products.map(p => ({ ...p, category: p.category || 'uncategorized' }))} />
+            <ProductGrid products={products} />
           </div>
         ) : (
           <div className="text-center py-20">

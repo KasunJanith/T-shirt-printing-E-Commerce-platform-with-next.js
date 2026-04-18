@@ -5,11 +5,7 @@ import { useCart } from '@/context/cart-context'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { CreditCard, Lock, CheckCircle } from 'lucide-react'
-import { loadStripe } from '@stripe/stripe-js'
-
-// Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+import { CreditCard, Lock } from 'lucide-react'
 
 export default function CheckoutPage() {
   const { state, dispatch } = useCart()

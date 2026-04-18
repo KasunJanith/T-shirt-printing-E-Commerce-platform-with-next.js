@@ -3,8 +3,19 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { stripe, formatAmountForStripe } from '@/lib/stripe'
 
+// Force dynamic rendering - don't try to prerender this route
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(request: Request) {
   try {
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Stripe is not configured. Please add your API keys and try again.' },
+        { status: 500 }
+      )
+    }
+
     const session = await getServerSession(authOptions)
     
     if (!session?.user?.email) {

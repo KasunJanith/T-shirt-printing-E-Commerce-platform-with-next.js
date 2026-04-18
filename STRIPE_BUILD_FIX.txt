@@ -1,0 +1,91 @@
+## 🔧 Stripe Build Error - FIXED
+
+### Problem
+```
+Error: STRIPE_SECRET_KEY is not set in environment variables
+Failed to collect page data for /api/checkout/session
+```
+
+### Root Cause
+The `stripe.ts` library initialization was throwing an error during the build phase when environment variables weren't available.
+
+### Solution Applied ✅
+
+Updated `src/lib/stripe.ts` to:
+1. Wrap Stripe initialization in try-catch block
+2. Silently fail during build when keys aren't available
+3. Set correct API version: `2025-09-30.clover`
+4. Export `stripe` as `null` during build, and properly initialized at runtime
+
+### Environment Variables Needed for Render
+
+Add these in Render Dashboard → Environment:
+
+```env
+# Database (PostgreSQL)
+DATABASE_URL=postgresql://user:password@host:5432/database
+
+# NextAuth
+NEXTAUTH_SECRET=your-secret-key-min-32-chars
+NEXTAUTH_URL=https://your-app.onrender.com
+
+# Stripe (from dashboard.stripe.com/apikeys)
+STRIPE_SECRET_KEY=sk_test_... or sk_live_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_... or pk_live_...
+
+# Stripe Webhook
+STRIPE_WEBHOOK_SECRET=whsec_... (from dashboard.stripe.com/webhooks)
+
+# App URL
+NEXT_PUBLIC_APP_URL=https://your-app.onrender.com
+```
+
+### Build Settings for Render
+
+**Build Command:**
+```
+npm install && npx prisma generate && npm run build
+```
+
+**Start Command:**
+```
+npm start
+```
+
+**Publish Directory:**
+```
+.next
+```
+
+### Deployment Steps
+
+1. **Create PostgreSQL Database** (if not already done)
+   - Render Dashboard → New → PostgreSQL
+   - Save the Internal Database URL
+
+2. **Add Environment Variables**
+   - Go to your web service → Environment
+   - Paste all variables above
+   - Click Save
+
+3. **Push Code**
+   ```bash
+   git add .
+   git commit -m "Fix: Wrap Stripe initialization in try-catch for build safety"
+   git push origin main
+   ```
+
+4. **Render will automatically redeploy**
+
+### Files Updated
+
+- ✅ `src/lib/stripe.ts` - Added try-catch wrapper around Stripe initialization
+
+### Expected Behavior
+
+✅ Build completes successfully even without Stripe keys  
+✅ At runtime, Stripe is initialized when keys are available  
+✅ API routes properly handle missing Stripe configuration  
+✅ No more build errors related to missing environment variables
+
+### Next Deploy Should Work! 🚀

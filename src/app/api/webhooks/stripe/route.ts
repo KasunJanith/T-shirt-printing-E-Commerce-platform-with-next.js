@@ -4,10 +4,22 @@ import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/db'
 import Stripe from 'stripe'
 
+// Force dynamic rendering - don't try to prerender this route
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(request: Request) {
+  if (!stripe) {
+    return NextResponse.json(
+      { error: 'Stripe is not configured. Webhook cannot be processed.' },
+      { status: 500 }
+    )
+  }
+
   const body = await request.text()
   const headersList = await headers()
   const signature = headersList.get('stripe-signature')
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
   if (!signature) {
     return NextResponse.json(
@@ -16,14 +28,17 @@ export async function POST(request: Request) {
     )
   }
 
+  if (!webhookSecret) {
+    return NextResponse.json(
+      { error: 'Webhook secret is not configured on the server.' },
+      { status: 500 }
+    )
+  }
+
   let event: Stripe.Event
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    )
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (error: any) {
     console.error('Webhook signature verification failed:', error.message)
     return NextResponse.json(

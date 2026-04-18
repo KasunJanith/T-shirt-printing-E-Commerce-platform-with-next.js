@@ -34,15 +34,22 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
+                const root = document.documentElement;
                 const theme = localStorage.getItem('theme');
                 if (theme === 'dark') {
-                  document.documentElement.classList.add('dark');
+                  root.classList.add('dark');
+                  root.dataset.theme = 'dark';
                 } else if (theme === 'light') {
-                  document.documentElement.classList.remove('dark');
+                  root.classList.remove('dark');
+                  root.dataset.theme = 'light';
                 } else {
                   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   if (prefersDark) {
-                    document.documentElement.classList.add('dark');
+                    root.classList.add('dark');
+                    root.dataset.theme = 'dark';
+                  } else {
+                    root.classList.remove('dark');
+                    root.dataset.theme = 'light';
                   }
                 }
               } catch (e) {}
